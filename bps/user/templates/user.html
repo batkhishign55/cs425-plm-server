@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container pt-5 pl-2">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card m-2" style="width: 18rem;">
+                <a href="/product">  
+                <img src="/static/assets/default.jpg" class="card-img-top" height="250" id="profileImage">
+                </a>  
+                <div class="card-body text-center">
+                    <h5 class="card-title " id="nickName">-</h5>
+                    <p class="card-text" id="memberTypes">-</p>
+                  </div>
+                </div>
+        </div>
+        <div class="col-md-7 pt-3">
+            <h1 class="f-6">User Information</h1>
+            <table class="table mt-2 table-borderless">
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>:</td>
+                        <td id="username">-</td>
+                    </tr>
+                    <tr>
+                        <td>Handphone</td>
+                        <td>:</td>
+                        <td id="phone">-</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>:</td>
+                        <td id="email">-</td>
+                    </tr>
+                  <tr>
+                    <td>Birth</td>
+                    <td>:</td>
+                    <td id="birth">-</td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>:</td>
+                    <td id="address">-</td>
+                  </tr>
+                  <tr>
+                    <td>Joined Dates</td>
+                    <td>:</td>
+                    <td id="joinedDates">-</td>
+                </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('user.static', filename='js/userUI.js') }}></script>
+{% endblock %}

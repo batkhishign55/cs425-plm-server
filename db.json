@@ -1,0 +1,169 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Nike Running Shoes",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "shoes",
+      "brand": "Nike",
+      "stock": "10",
+      "weight": "1",
+      "price": 5400,
+      "images": "/static/productImages/1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Logitech G101",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "mouse",
+      "brand": "Logitech",
+      "stock": "20",
+      "weight": "1",
+      "price": 500,
+      "images": "/static/productImages/2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Nike Sport Shoes",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "shoes",
+      "brand": "Nike",
+      "stock": "10",
+      "weight": "1",
+      "price": 6700,
+      "images": "/static/productImages/3.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Fyan Bike Sport",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "shoes",
+      "brand": "Fyan",
+      "stock": "30",
+      "weight": "1",
+      "price": 14000,
+      "images": "/static/productImages/4.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Sonny Cam 101",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "cam",
+      "brand": "Sony",
+      "stock": "15",
+      "weight": "1",
+      "price": 3000,
+      "images": "/static/productImages/5.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Ray Ban Eyeglasses",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "eyeglasses",
+      "brand": "Ray Ban",
+      "stock": "10",
+      "weight": "1",
+      "price": 2000,
+      "images": "/static/productImages/6.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Slip on shoes",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "shoes",
+      "brand": "Nike",
+      "stock": "30",
+      "weight": "1",
+      "price": 14000,
+      "images": "/static/productImages/7.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Logitech 101 headphone",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "headphone",
+      "brand": "Logitech",
+      "stock": "8",
+      "weight": "1",
+      "price": 2700,
+      "images": "/static/productImages/8.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Mi Band 3",
+      "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+      "type": "watch",
+      "brand": "MI",
+      "stock": "7",
+      "weight": "1",
+      "price": 2400,
+      "images": "/static/productImages/9.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "nickName": "Obi Kastanya",
+      "username": "obikastanya",
+      "phone": "08573129083",
+      "email": "handsomeguy@gmail.com",
+      "birth": "12-03-2000",
+      "address": "Losari, Jl. Raya Pantura No.KM.17 No.16, Pangenan, Kec. Pangenan, Kabupaten Cirebon, Jawa Barat 45182",
+      "joinedDates": "22-07-2020",
+      "memberTypes": "Premium member",
+      "images": "/static/personImages/profile1.jpg"
+    }
+  ],
+  "carts": [
+    {
+      "id": "1",
+      "owner": {
+        "id": "1",
+        "nickName": "Obi Kastanya",
+        "username": "obikastanya",
+        "phone": "08573129083",
+        "email": "handsomeguy@gmail.com",
+        "birth": "12-03-2000",
+        "address": "Losari, Jl. Raya Pantura No.KM.17 No.16, Pangenan, Kec. Pangenan, Kabupaten Cirebon, Jawa Barat 45182",
+        "joinedDates": "22-07-2020",
+        "memberTypes": "Premium member",
+        "images": "/static/personImages/profile1.jpg"
+      },
+      "items": [
+        {
+          "id": 8,
+          "name": "Logitech 101 headphone",
+          "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+          "type": "headphone",
+          "brand": "Logitech",
+          "stock": "8",
+          "weight": "1",
+          "price": 2700,
+          "images": "/static/productImages/8.jpg"
+        },
+        {
+          "id": 9,
+          "name": "Mi Band 3",
+          "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+          "type": "watch",
+          "brand": "MI",
+          "stock": "7",
+          "weight": "1",
+          "price": 2400,
+          "images": "/static/productImages/9.jpg"
+        },
+        {
+          "id": 1,
+          "name": "Nike Running Shoes",
+          "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quidem nemo incidunt veniam rerum saepe.",
+          "type": "shoes",
+          "brand": "Nike",
+          "stock": "10",
+          "weight": "1",
+          "price": 5400,
+          "images": "/static/productImages/1.jpg"
+        }
+      ]
+    }
+  ]
+}
