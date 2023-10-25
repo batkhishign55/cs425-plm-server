@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container pt-5 pl-2">
+    <h1 class="f-6">Parking lot Information</h1>
+    <table class="table mt-2 table-borderless">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td id="name">-</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>:</td>
+                <td id="address">-</td>
+            </tr>
+            <tr>
+                <td>Total Spots</td>
+                <td>:</td>
+                <td id="totalSpots">-</td>
+            </tr>
+            <tr>
+                <td>Available Spots</td>
+                <td>:</td>
+                <td id="availableSpots">-</td>
+            </tr>
+            <tr>
+                <td>Employee</td>
+                <td>:</td>
+                <td id="employee">-</td>
+            </tr>
+            <tr>
+        </tbody>
+        </table>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('lot.static', filename='js/lotUI.js') }}></script>
+{% endblock %}

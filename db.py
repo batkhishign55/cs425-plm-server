@@ -2,6 +2,7 @@ from flask import g
 
 import mysql.connector
 
+
 def init_db():
     print('Initializing db connection...')
     g.db = mysql.connector.connect(
@@ -10,6 +11,7 @@ def init_db():
         password="password",
         database="plm"
     )
+
 
 def get_db():
     if 'db' not in g:
