@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Res_ID</th>
+            <th scope="col">cust_id</th>
+            <th scope="col">Spot ID</th>
+            <th scope="col">Expire Time</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="ReservationListId">
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('static', filename='reservationUI.js')}}></script>
+{% endblock %}

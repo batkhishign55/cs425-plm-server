@@ -7,8 +7,9 @@ def init_db():
     g.db = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="password",
+        password="Adhya@2007#",
         database="plm"
+
     )
 
 def get_db():
