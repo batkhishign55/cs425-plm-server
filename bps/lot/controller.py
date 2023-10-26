@@ -24,3 +24,10 @@ class LotController:
         except Exception as e:
             abort(500, str(e))
         return {'status': True, 'data': data, 'message': ''}
+
+    def deleteLot(self):
+        try:
+            data = self.model.deleteLot(request.json)
+        except Exception as e:
+            abort(500, str(e))
+        return {'status': True, 'data': data, 'message': ''}

@@ -22,3 +22,7 @@ def lotDetail(lot_id):
 @lot.post('/api/update')
 def lotUpdate():
     return LotController().updateLot()
+
+@lot.delete('/api/')
+def lotDelete():
+    return LotController().deleteLot()

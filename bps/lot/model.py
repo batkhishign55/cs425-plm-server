@@ -25,3 +25,11 @@ class Lot:
                 WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['lotId'],))
         self.db.commit()
         return mycursor.rowcount
+
+    def deleteLot(self, dict):
+        mycursor = self.db.cursor()
+        mycursor.execute(
+            """DELETE FROM parking_lot
+                WHERE lot_id=%s""", ( dict['lotId'],))
+        self.db.commit()
+        return mycursor.rowcount
