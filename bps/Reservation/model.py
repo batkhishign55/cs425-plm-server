@@ -11,7 +11,9 @@ class Reservation:
     def get(self):
         mycursor = self.db.cursor()
         mycursor.execute("SELECT * FROM reservation;")
-        return mycursor.fetchall()
+        res = mycursor.fetchall()
+        print(res)
+        return res
 
     def getSingleReservation(self, id):
         reservation=self.collections.get('reservation')

@@ -1,10 +1,10 @@
 window.addEventListener("load", function () {
-    new Api().callApiReservation().then(new UI().showReservation);
+    new Api().callApiLots().then(new UI().showReservation);
   });
   
   class Api {
-    async callApiReservation() {
-      const resp = await fetch("/reservation/api/");
+    async callApiLots() {
+      const resp = await fetch("/res/api/");
       const jsonresp=await resp.json()
       return jsonresp;
     }
@@ -27,17 +27,18 @@ window.addEventListener("load", function () {
         ReservationRows.push(row);
       }
   
-      this.loadPage(lotRows.join(""));
+      this.loadPage(ReservationRows.join(""));
     }
   
-    createRow(lot) {
+    createRow(reservation) {
       const cardTemplate = `
           <tr>
               <th scope="row">${reservation[0]}</th>
               <td>${reservation[1]}</td>
               <td>${reservation[2]}</td>
-              <td>${reservation[4]}/${reservation[3]}</td>
-              <td>${reservation[5]}</td>
+              <td>${reservation[3]}</td>
+              <td>${reservation[4]}</td>
+              
               <td>
                 <button type="button" class="btn btn-primary">Detail</button>
               </td>

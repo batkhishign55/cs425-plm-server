@@ -40,6 +40,7 @@ window.addEventListener("load", function () {
               <td>${cust[4]}</td>
               <td>${cust[5]}</td>
               <td>${cust[6]}</td>
+              <td>${cust[7]}</td>
               
 
               <td>

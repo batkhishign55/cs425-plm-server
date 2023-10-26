@@ -1,10 +1,10 @@
 window.addEventListener("load", function () {
-    new Api().callApiLots().then(new UI().showLots);
+    new Api().callApiLots().then(new UI().showPayments);
   });
   
   class Api {
     async callApiLots() {
-      const resp = await fetch("/lot/api/");
+      const resp = await fetch("/pay/api/");
       const jsonresp=await resp.json()
       return jsonresp;
     }
@@ -12,11 +12,11 @@ window.addEventListener("load", function () {
   
   class UI {
     constructor() {
-      this.showLots = this.showLots.bind(this);
+      this.showPayments = this.showPayments.bind(this);
     }
   
     loadPage(page) {
-      let productListElement = document.getElementById("lotListId");
+      let productListElement = document.getElementById("paymentListId");
       productListElement.innerHTML = page;
     }
   
@@ -36,7 +36,8 @@ window.addEventListener("load", function () {
               <th scope="row">${payment[0]}</th>
               <td>${payment[1]}</td>
               <td>${payment[2]}</td>
-              <td>${payment[4]}/${payment[3]}</td>
+              <td>${payment[3]}</td>
+              <td>${payment[4]}</td>
               <td>${payment[5]}</td>
               <td>
                 <button type="button" class="btn btn-primary">Detail</button>

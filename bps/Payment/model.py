@@ -11,7 +11,9 @@ class Payment:
     def get(self):
         mycursor = self.db.cursor()
         mycursor.execute("SELECT * FROM payment;")
-        return mycursor.fetchall()
+        res = mycursor.fetchall()
+        print(res)
+        return res
 
     def getSinglePayment(self, id):
         payments=self.collections.get('payment')
