@@ -5,7 +5,24 @@ window.addEventListener("load", function () {
 class Api {
   async callApiLots() {
     const resp = await fetch("/lot/api/");
+    const jsonresp = await resp.json();
+    return jsonresp;
+  }
+
+  async callDeleteLot(itemId) {
+
+    const resp=await fetch('/lot/api/',
+        {
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'lotId':itemId})
+        }
+    )
+
     const jsonresp=await resp.json()
+    this.callApiLots().then(new UI().showLots);
     return jsonresp;
   }
 }
@@ -28,6 +45,7 @@ class UI {
     }
 
     this.loadPage(lotRows.join(""));
+    this.registerEventForDelete();
   }
 
   createRow(lot) {
@@ -39,12 +57,24 @@ class UI {
             <td>${lot[4]}/${lot[3]}</td>
             <td>${lot[5]}</td>
             <td>
-            <a href="/lot/${lot[0]}">
-              <button type="button" class="btn btn-primary">Update</button>
-            </a>
+              <a href="/lot/${lot[0]}">
+                <button type="button" class="btn btn-primary">Update</button>
+              </a>
+              <button type="button" class="btn btn-danger delete" itemId=${lot[0]}>Delete</button>
             </td>
         </tr>
         `;
     return cardTemplate;
+  }
+
+  registerEventForDelete() {
+    const listOfActionButton = document.getElementsByClassName("delete");
+
+    for (let element of listOfActionButton) {
+      element.addEventListener("click", function () {
+        console.log(this.getAttribute("itemId"));
+        new Api().callDeleteLot(this.getAttribute("itemId"));
+      });
+    }
   }
 }
