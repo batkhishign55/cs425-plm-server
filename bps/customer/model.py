@@ -15,9 +15,13 @@ class Customer:
         print(res)
         return res
 
-    def getSingleCustomer(self, id):
-        customers=self.collections.get('customer')
-        for cust in customers:
-            if str(cust.get('id'))==id: 
-                return cust
-        return {}
+    def getSingleCustomer(self, cust_id):
+        # customers=self.collections.get('customer')
+        # for cust in customers:
+        #     if str(cust.get('id'))==id: 
+        #         return cust
+        # return {}
+        mycursor = self.db.cursor()
+        mycursor.execute(
+            """SELECT * FROM customer""", (cust_id,))
+        return mycursor.fetchone()

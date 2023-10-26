@@ -19,14 +19,14 @@ window.addEventListener("load", function () {
   
     showCustDetail(apiresp) {
       const getEl = (id) => document.getElementById(id);
-      const cust = apiresp.data;
-      getEl("name").setAttribute("value", cust[1]);
-      getEl("name").setAttribute("value", cust[1]);
-      getEl("name").setAttribute("value", cust[1]);
-      getEl("address").innerHTML = cust[2];
-      getEl("totalSpots").innerHTML = cust[3];
-      getEl("availableSpots").innerHTML = cust[4];
-      getEl("employee").innerHTML = cust[5];
+      const customer = apiresp.data;
+      getEl("name").setAttribute("value", customer[1]);
+      getEl("name").setAttribute("value", customer[1]);
+      getEl("name").setAttribute("value", customer[1]);
+      getEl("address").innerHTML = customer[2];
+      getEl("totalSpots").innerHTML = customer[3];
+      getEl("availableSpots").innerHTML = customer[4];
+      getEl("employee").innerHTML = customer[5];
     }
   }
   
