@@ -40,7 +40,7 @@ class UI {
             <td>${lot[5]}</td>
             <td>
             <a href="/lot/${lot[0]}">
-              <button type="button" class="btn btn-primary">Detail</button>
+              <button type="button" class="btn btn-primary">Update</button>
             </a>
             </td>
         </tr>

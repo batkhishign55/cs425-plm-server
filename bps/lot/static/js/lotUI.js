@@ -20,7 +20,9 @@ class UI {
   showLotDetail(apiresp) {
     const getEl = (id) => document.getElementById(id);
     const lot = apiresp.data;
-    getEl("name").innerHTML = lot[1];
+    getEl("name").setAttribute("value", lot[1]);
+    getEl("name").setAttribute("value", lot[1]);
+    getEl("name").setAttribute("value", lot[1]);
     getEl("address").innerHTML = lot[2];
     getEl("totalSpots").innerHTML = lot[3];
     getEl("availableSpots").innerHTML = lot[4];
