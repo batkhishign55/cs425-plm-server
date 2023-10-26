@@ -18,3 +18,7 @@ def lotList():
 @lot.get('/api/detail/<lot_id>')
 def lotDetail(lot_id):
     return LotController().getSingleLot(lot_id)
+
+@lot.post('/api/update')
+def lotUpdate():
+    return LotController().updateLot()

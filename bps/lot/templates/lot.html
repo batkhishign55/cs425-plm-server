@@ -3,48 +3,32 @@
 {% block content %}
 <div class="container pt-5 pl-2">
     <h1 class="f-6">Parking lot Information</h1>
-    <table class="table mt-2 table-borderless">
-        <tbody>
-            <tr>
-                <td>Name</td>
-                <td>:</td>
-                <td id="name2">-</td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td id="address">-</td>
-            </tr>
-            <tr>
-                <td>Total Spots</td>
-                <td>:</td>
-                <td id="totalSpots">-</td>
-            </tr>
-            <tr>
-                <td>Available Spots</td>
-                <td>:</td>
-                <td id="availableSpots">-</td>
-            </tr>
-            <tr>
-                <td>Employee</td>
-                <td>:</td>
-                <td id="employee">-</td>
-            </tr>
-            <tr>
-        </tbody>
-    </table>
-    <form>
-        <div class="form-row">
-            <div class="form-group col-auto my-1">
-                <label for="exampleInputEmail1">Name</label>
-                <input class="form-control" id="name" placeholder="Lot Name">
+    <form id="form">
+        <div class="row">
+            <div class="col">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Lot Name">
             </div>
-            <div class="form-group col-auto my-1">
-                <label for="exampleInputPassword1">Address</label>
-                <input class="form-control" id="addressId" placeholder="Lot Address">
+            <div class="col">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" placeholder="Lot Address">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        <div class="row">
+            <div class="col">
+                <label for="totalSpots">Total Spots</label>
+                <input type="number" class="form-control" id="totalSpots">
+            </div>
+            <div class="col">
+                <label for="availableSpots">Available Spots</label>
+                <input type="number" class="form-control" id="availableSpots">
+            </div>
+        </div>
+        <div>
+            <label for="employee">Employee</label>
+            <input type="number" class="form-control" id="employee">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 {% endblock %}
