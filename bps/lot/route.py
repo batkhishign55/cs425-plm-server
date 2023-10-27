@@ -6,10 +6,13 @@ lot = Blueprint(
     url_prefix='/lot'
 )
 
+@lot.get('/')
+def create():
+    return render_template('lotForm.html')
 
 @lot.get('/<lot_id>')
 def index(lot_id):
-    return render_template('lot.html')
+    return render_template('lotForm.html')
 
 @lot.get('/api/')
 def lotList():
@@ -26,3 +29,7 @@ def lotUpdate():
 @lot.delete('/api/')
 def lotDelete():
     return LotController().deleteLot()
+
+@lot.post('/api/create')
+def lotCreate():
+    return LotController().createLot()
