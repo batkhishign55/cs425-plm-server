@@ -38,10 +38,7 @@ window.addEventListener("load", function () {
               <td>${reservation[2]}</td>
               <td>${reservation[3]}</td>
               <td>${reservation[4]}</td>
-              
-              <td>
-                <button type="button" class="btn btn-primary">Detail</button>
-              </td>
+            
           </tr>
           `;
       return cardTemplate;

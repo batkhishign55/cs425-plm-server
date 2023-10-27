@@ -39,9 +39,7 @@ window.addEventListener("load", function () {
               <td>${payment[3]}</td>
               <td>${payment[4]}</td>
               <td>${payment[5]}</td>
-              <td>
-                <button type="button" class="btn btn-primary">Detail</button>
-              </td>
+              
           </tr>
           `;
       return cardTemplate;

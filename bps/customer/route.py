@@ -8,7 +8,11 @@ cust = Blueprint(
 
 
 @cust.get('/<cust_id>')
-def index(cust_id):
+def form(cust_id):
+    return render_template('customerForm.html')
+
+@cust.get('/create/')
+def index():
     return render_template('customerForm.html')
 
 @cust.get('/api/')
@@ -26,3 +30,7 @@ def custUpdate():
 @cust.delete('/api/')
 def custDelete():
     return CustController().deleteCust()
+
+@cust.post('/api/create')
+def custCreate():
+    return CustController().createCust()
