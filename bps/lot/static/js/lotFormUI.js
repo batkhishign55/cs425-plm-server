@@ -3,7 +3,6 @@ var mode = "create";
 window.addEventListener("load", async function () {
   const urls = location.href.split("/");
   const lotId = urls[urls.length - 1];
-  console.log(urls);
 
   // update mode
   if (lotId !== "") {
@@ -56,6 +55,8 @@ document.getElementById("form").addEventListener(
 
       const jsonresp = await resp.json();
     }
+    var base_url = window.location.origin;
+    window.location.replace(base_url+"/");
   },
   true
 );
