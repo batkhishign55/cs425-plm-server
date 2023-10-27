@@ -30,6 +30,26 @@ class Lot:
         mycursor = self.db.cursor()
         mycursor.execute(
             """DELETE FROM parking_lot
-                WHERE lot_id=%s""", ( dict['lotId'],))
+                WHERE lot_id=%s""", (dict['lotId'],))
+        self.db.commit()
+        return mycursor.rowcount
+
+    def createLot(self, dict):
+        mycursor = self.db.cursor()
+
+        mycursor.execute("""SELECT MAX(lot_id) FROM parking_lot""")
+
+        lot_id = mycursor.fetchone()[0]
+        print(lot_id)
+
+        lot_id += 1
+
+        print()
+
+        mycursor.execute(
+            """INSERT INTO parking_lot
+                    (lot_id, lot_name, location, total_spots, available_spots, emp_id)
+                VALUES
+                    (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'],))
         self.db.commit()
         return mycursor.rowcount

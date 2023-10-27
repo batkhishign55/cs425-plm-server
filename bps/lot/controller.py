@@ -22,6 +22,7 @@ class LotController:
         try:
             data = self.model.updateLot(request.json)
         except Exception as e:
+            print(str(e))
             abort(500, str(e))
         return {'status': True, 'data': data, 'message': ''}
 
@@ -29,5 +30,14 @@ class LotController:
         try:
             data = self.model.deleteLot(request.json)
         except Exception as e:
+            print(str(e))
+            abort(500, str(e))
+        return {'status': True, 'data': data, 'message': ''}
+
+    def createLot(self):
+        try:
+            data = self.model.createLot(request.json)
+        except Exception as e:
+            print(str(e))
             abort(500, str(e))
         return {'status': True, 'data': data, 'message': ''}
