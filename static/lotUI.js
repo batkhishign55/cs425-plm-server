@@ -55,7 +55,7 @@ class UI {
             <td>${lot[1]}</td>
             <td>${lot[2]}</td>
             <td>${lot[4]}/${lot[3]}</td>
-            <td>${lot[5]}</td>
+            <td>${lot[6]} ${lot[7]}</td>
             <td>
               <a href="/lot/${lot[0]}">
                 <button type="button" class="btn btn-primary">Update</button>

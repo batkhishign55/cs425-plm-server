@@ -56,7 +56,7 @@ document.getElementById("form").addEventListener(
       const jsonresp = await resp.json();
     }
     var base_url = window.location.origin;
-    window.location.replace(base_url+"/");
+    window.location.replace(base_url + "/");
   },
   true
 );
