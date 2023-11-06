@@ -8,7 +8,8 @@ class Lot:
 
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute("""SELECT * FROM parking_lot""")
+        mycursor.execute(
+            """SELECT pl.*, e.first_name, e.last_name FROM parking_lot pl LEFT JOIN employee e on e.emp_id=pl.emp_id """)
         return mycursor.fetchall()
 
     def getSingleLot(self, lot_id):
@@ -40,11 +41,7 @@ class Lot:
         mycursor.execute("""SELECT MAX(lot_id) FROM parking_lot""")
 
         lot_id = mycursor.fetchone()[0]
-        print(lot_id)
-
         lot_id += 1
-
-        print()
 
         mycursor.execute(
             """INSERT INTO parking_lot
