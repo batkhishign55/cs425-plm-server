@@ -6,7 +6,7 @@ log = Blueprint(
     url_prefix='/log'
 )
 
-
+#class
 @log.get('/<log_id>')
 def index(log_id):
     return render_template('log.html')

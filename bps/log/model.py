@@ -3,8 +3,7 @@ import pathlib
 from flask import g
 
 from db import get_db
-
-
+# class
 class log:
     def __init__(self):
         self.db = get_db()

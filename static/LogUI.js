@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
     new Api().callApilogs().then(new UI().showlogs);
 });
-
+//CLASS
 class Api {
 async callApilogs() {
     const resp = await fetch("/log/api/");

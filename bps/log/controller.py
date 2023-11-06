@@ -1,6 +1,6 @@
 from .model import log
 
-
+#class
 class logController:
     def __init__(self):
         self.model = log()
