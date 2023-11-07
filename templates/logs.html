@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Log ID</th>
+            <th scope="col">Vehicle ID</th>
+            <th scope="col">Spot ID</th>
+            <th scope="col">Checkout Time</th>
+            <th scope="col">Check In Time</th>
+            <th scope="col">Res ID</th>
+          </tr>
+        </thead>
+        <tbody id="logListId">
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('static', filename='logUI.js')}}></script>
+{% endblock %}
