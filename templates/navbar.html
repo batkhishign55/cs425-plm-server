@@ -1,22 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <div class="col-11">
-            <a class="navbar-brand" href="/">Parking Lots</a>
-            <a class="navbar-brand" href="/cust">Customers</a> 
-            <a class="navbar-brand" href="/res">Reservations</a> 
-            <a class="navbar-brand" href="/log">Parking logs</a> 
-            <a class="navbar-brand" href="/pay">Payments</a> 
-        </div>
-        <div class="col-1">
-            <div class="text-right">
-              <a href="/user">
-                <button type="button" class="btn btn-error position-relative">
-                  <img src="/static/assets/user-svgrepo-com.svg" alt="" srcset="">
-                  </button> 
-                </a>
-            </div>
-            
-        </div>
+  <div class="container-fluid">
+    <div class="col-10">
+      <a class="navbar-brand" href="/">Parking Lots</a>
+      <a class="navbar-brand" href="/cust">Customers</a>
+      <a class="navbar-brand" href="/res">Reservations</a>
+      <a class="navbar-brand" href="/log">Parking logs</a>
+      <a class="navbar-brand" href="/pay">Payments</a>
+    </div>
+    <div class="col-1">
+      <div class="text-right">
+        <a href="/user">
+          <button type="button" class="btn btn-error position-relative">
+            <img src="/static/assets/user-svgrepo-com.svg" alt="" srcset="" />
+          </button>
+        </a>
       </div>
     </div>
-  </nav>
+    <div class="col-1">
+      <button id="logout" type="button" class="btn btn-danger">Logout</button>
+    </div>
+  </div>
+</nav>
+
+{% block script %}
+<script src={{ url_for('static', filename='navbarUI.js')}}></script>
+{% endblock %}
