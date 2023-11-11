@@ -32,3 +32,11 @@ class CustController:
         except Exception as e:
             abort(500, str(e))
         return {'status': True, 'data': data, 'message': ''}
+    
+    def createCust(self):
+        try:
+            data = self.model.createCust(request.json)
+        except Exception as e:
+            print(str(e))
+            abort(500, str(e))
+        return {'status': True, 'data': data, 'message': ''}
