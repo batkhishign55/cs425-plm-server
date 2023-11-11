@@ -1,6 +1,7 @@
 from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, redirect, render_template, request, session, url_for
 from bps.auth.route import authbp
+from bps.log.route import log
 from bps.lot.route import lot
 from bps.user.route import user
 from bps.customer.route import cust
@@ -18,6 +19,7 @@ app.register_blueprint(cust)
 app.register_blueprint(reservation)
 app.register_blueprint(payment)
 app.register_blueprint(authbp)
+app.register_blueprint(log)
 
 
 with app.app_context():
@@ -59,6 +61,11 @@ def reservation():
 @app.get('/pay')
 def payment():
     return render_template('payment.html')
+
+
+@app.get('/log')
+def log():
+    return render_template('logs.html')
 
 
 app.secret_key = 'some secret key'
