@@ -1,4 +1,7 @@
 from flask import Blueprint, render_template
+
+from protect import protect
+
 from .controller import AuthController
 
 authbp = Blueprint(
@@ -18,5 +21,6 @@ def loginPost():
 
 
 @authbp.post('/logout')
+@protect
 def logoutPost():
     return AuthController().logout()

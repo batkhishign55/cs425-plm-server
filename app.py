@@ -1,15 +1,16 @@
 from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, redirect, render_template, request, session, url_for
+
 from bps.auth.route import authbp
-from bps.log.route import log
 from bps.lot.route import lot
 from bps.user.route import user
 from bps.customer.route import cust
 from bps.Reservation.route import reservation
 from bps.Payment.route import payment
-
+from bps.log.route import log
 
 from db import init_db
+from protect import protect
 
 app = Flask(__name__)
 
@@ -32,38 +33,32 @@ def catch_server_errors(e: Exception):
         return {'message': str(e)}, 500
 
 
-def login_required(func):
-    def secure_function(*args, **kwargs):
-        print(session)
-        if "email" not in session:
-            return redirect(url_for("auth.login"))
-        return func(*args, **kwargs)
-
-    return secure_function
-
-
 @app.get('/')
-@login_required
+@protect
 def index():
     return render_template('lots.html')
 
 
 @app.get('/cust')
+@protect
 def cust():
     return render_template('customer.html')
 
 
 @app.get('/res')
+@protect
 def reservation():
     return render_template('reservation.html')
 
 
 @app.get('/pay')
+@protect
 def payment():
     return render_template('payment.html')
 
 
 @app.get('/log')
+@protect
 def log():
     return render_template('logs.html')
 

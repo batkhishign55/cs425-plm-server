@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template
+
+from protect import protect
 from .controller import CustController
 
 cust = Blueprint(
@@ -6,6 +8,10 @@ cust = Blueprint(
     url_prefix='/cust'
 )
 
+@cust.before_request
+@protect
+def login_required():
+    pass
 
 @cust.get('/<cust_id>')
 def form(cust_id):
