@@ -75,15 +75,15 @@ def logs():
 
 @app.get('/usersignup')
 def usersignup():
-    return render_template('usersignup.html', type=session["object"]["type"])
+    return render_template('usersignup.html')
 
 @app.get('/userlogin')
 def userlogin():
-    return render_template('userlogin.html', type=session["object"]["type"])
+    return render_template('userlogin.html')
 
 @app.get('/adminlogin')
 def admin():
-    return render_template('admin_login.html', type=session["object"]["type"])
+    return render_template('admin_login.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=8887)

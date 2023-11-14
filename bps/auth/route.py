@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 
 from protect import adminProtect, userProtect
 
@@ -15,10 +15,18 @@ def adminLogin():
     return AuthController().adminLogin()
 
 
-@authbp.post('/admin/logout')
-@adminProtect
-def adminLogout():
-    return AuthController().adminLogout()
+@authbp.post('/logout')
+def logout():
+    return AuthController().logout()
+
+
+@authbp.get('/admin/check')
+def adminCheck():
+    if "object" not in session:
+        return {"message": "not authorized"}, 401
+    if session["object"]["type"] != "admin":
+        return {"message": "not authorized"}, 401
+    return "has session", 200
 
 
 @authbp.post('/user/login')
@@ -26,7 +34,10 @@ def userLogin():
     return AuthController().userLogin()
 
 
-@authbp.post('/user/logout')
-@userProtect
-def userLogout():
-    return AuthController().userLogout()
+@authbp.get('/user/check')
+def userCheck():
+    if "object" not in session:
+        return {"message": "not authorized"}, 401
+    if session["object"]["type"] != "user":
+        return {"message": "not authorized"}, 401
+    return "has session", 200

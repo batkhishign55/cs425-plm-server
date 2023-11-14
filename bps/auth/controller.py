@@ -14,8 +14,9 @@ class AuthController:
         session['object'] = {"username": request.json['username'], "type": "admin"}
         return {'data': data}
 
-    def adminLogout(self):
+    def logout(self):
         session.pop('object')
+        print("logged out")
         return {'message': "success"}
 
     def userLogin(self):
@@ -25,7 +26,3 @@ class AuthController:
 
         session['object'] = {"username": request.json['username'], "type": "user"}
         return {'data': data}
-
-    def userLogout(self):
-        session.pop('object')
-        return {'message': "success"}
