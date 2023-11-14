@@ -74,5 +74,6 @@ class UI {
     getEl("totalSpots").setAttribute("value", lot[3]);
     getEl("availableSpots").setAttribute("value", lot[4]);
     getEl("employee").setAttribute("value", lot[5]);
+    getEl("pincode").setAttribute("value", lot[6]);
   }
 }

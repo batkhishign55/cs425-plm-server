@@ -22,8 +22,8 @@ class Lot:
         mycursor = self.db.cursor()
         mycursor.execute(
             """UPDATE parking_lot
-                    SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s, emp_id=%s
-                WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['lotId'],))
+                    SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s, emp_id=%s, pincode=%s
+                WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['pincode'],dict['lotId'],))
         self.db.commit()
         return mycursor.rowcount
 
@@ -45,8 +45,8 @@ class Lot:
 
         mycursor.execute(
             """INSERT INTO parking_lot
-                    (lot_id, lot_name, location, total_spots, available_spots, emp_id)
+                    (lot_id, lot_name, location, total_spots, available_spots, emp_id,pincode)
                 VALUES
-                    (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'],))
+                    (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'],dict['pincode'],))
         self.db.commit()
         return mycursor.rowcount

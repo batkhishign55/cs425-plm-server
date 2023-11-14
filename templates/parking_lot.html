@@ -1,0 +1,106 @@
+{% extends "model.html" %}
+
+{% block title %}Parking_Lots{% endblock title%}
+{% block form %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    {% include "message.html" %}
+                    <h2> </h2>
+                    <h4 class="text-center">Search Lots</h4>
+                    <div class="card-body bg-light">
+                        <form id="searchForm" action="#" method="post">
+                            <div class="form-group">
+                                <label for="locations">Choose Lots : </label>
+                                <select name="source" id="source">
+                                    <option value="None" selected disabled hidden>Select Lot</option>
+                                    <option value="60612">60612</option>
+                                    <option value="60616">60616</option>
+                                    <option value="60618">60618</option>
+                                    <option value="60631">60631</option>
+                                    <option value="60642">60642</option>
+                                    <option value="60654">60654</option>
+                                    <option value="60681">60681</option>
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <button type="button" class="btn btn-info" onclick="searchLots()">Search Lots</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <form id="reserveForm" action="/pay" method="post">
+                    <table class="table" id="parkingLotsTable">
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Select</th>
+                                <th scope="col">Lot_ID</th>
+                                <th scope="col">Lot_Name</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Total_spots</th>
+                                <th scope="col">Available_Spots</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for parking_lot in parking_lots %}
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="selectedLot" value="{{ parking_lot.lot_id }}">
+                                    </td>
+                                    <td>{{ parking_lot.lot_id }}</td>
+                                    <td>{{ parking_lot.lot_name }}</td>
+                                    <td>{{ parking_lot.location }}</td>
+                                    <td>{{ parking_lot.total_spots }}</td>
+                                    <td>{{ parking_lot.available_spots }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table><br><br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Reserve Spot</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% block script %}
+        <script>
+            function searchLots() {
+                const selectedValue = document.getElementById("source").value;
+                const apiUrl = `/api/search_lots?source=${selectedValue}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const parkingLots = data.parking_lots;
+                        updateParkingLotsTable(parkingLots);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function updateParkingLotsTable(parkingLots) {
+                const tableBody = document.querySelector("#parkingLotsTable tbody");
+                tableBody.innerHTML = "";
+
+                parkingLots.forEach(parkingLot => {
+                    const row = `<tr>
+                                    <td>
+                                        <input type="radio" name="selectedLot" value="${parkingLot.lot_id}">
+                                    </td>
+                                    <td>${parkingLot.lot_id}</td>
+                                    <td>${parkingLot.lot_name}</td>
+                                    <td>${parkingLot.location}</td>
+                                    <td>${parkingLot.total_spots}</td>
+                                    <td>${parkingLot.available_spots}</td>
+                                </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            }
+        </script>
+    {% endblock %}
+{% endblock %}
