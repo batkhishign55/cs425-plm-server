@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from protect import protect
+from protect import adminProtect, userProtect
 
 from .controller import AuthController
 
@@ -10,17 +10,23 @@ authbp = Blueprint(
 )
 
 
-@authbp.get('/')
-def login():
-    return render_template('login.html')
+@authbp.post('/admin/login')
+def adminLogin():
+    return AuthController().adminLogin()
 
 
-@authbp.post('/login')
-def loginPost():
-    return AuthController().login()
+@authbp.post('/admin/logout')
+@adminProtect
+def adminLogout():
+    return AuthController().adminLogout()
 
 
-@authbp.post('/logout')
-@protect
-def logoutPost():
-    return AuthController().logout()
+@authbp.post('/user/login')
+def userLogin():
+    return AuthController().userLogin()
+
+
+@authbp.post('/user/logout')
+@userProtect
+def userLogout():
+    return AuthController().userLogout()

@@ -5,23 +5,30 @@ window.addEventListener("load", function () {
 class Api {
   async callApiLots() {
     const resp = await fetch("/lot/api/");
-    const jsonresp = await resp.json();
-    return jsonresp;
+    return await fetch("/lot/api/").then(async (res) => {
+      if (res.status === 200) {
+        const jsonresp = await resp.json();
+        return jsonresp;
+      } else {
+        const jsonresp = await res.json();
+        showModal(res.status + " " + jsonresp.message);
+      }
+    })
+    .catch((e) => {
+      showModal(e);
+    });
   }
 
   async callDeleteLot(itemId) {
+    const resp = await fetch("/lot/api/", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ lotId: itemId }),
+    });
 
-    const resp=await fetch('/lot/api/',
-        {
-            method:'DELETE',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({'lotId':itemId})
-        }
-    )
-
-    const jsonresp=await resp.json()
+    const jsonresp = await resp.json();
     this.callApiLots().then(new UI().showLots);
     return jsonresp;
   }
@@ -60,6 +67,7 @@ class UI {
               <a href="/lot/${lot[0]}">
                 <button type="button" class="btn btn-primary">Update</button>
               </a>
+
               <button type="button" class="btn btn-danger delete" itemId=${lot[0]}>Delete</button>
             </td>
         </tr>
@@ -78,3 +86,12 @@ class UI {
     }
   }
 }
+
+$(document).ready(function () {
+  $("#searchInput").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#lotListId tr").filter(function () {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+  });
+});

@@ -1,11 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <div class="col-10">
-      <a class="navbar-brand" href="/">Parking Lots</a>
-      <a class="navbar-brand" href="/cust">Customers</a>
-      <a class="navbar-brand" href="/res">Reservations</a>
-      <a class="navbar-brand" href="/log">Parking logs</a>
-      <a class="navbar-brand" href="/pay">Payments</a>
+      {% if type == 'admin' %}
+        <a class="navbar-brand" href="/lot">Parking Lots</a>
+        <a class="navbar-brand" href="/cust">Customers</a>
+        <a class="navbar-brand" href="/res">Reservations</a>
+        <a class="navbar-brand" href="/log">Parking logs</a>
+        <a class="navbar-brand" href="/pay">Payments</a>
+      {% else %}
+        <a class="navbar-brand" href="/lot">Parking Lots</a>
+        <a class="navbar-brand" href="/cust">Customers</a>
+      {% endif %}
     </div>
     <div class="col-1">
       <div class="text-right">

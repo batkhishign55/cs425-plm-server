@@ -1,5 +1,4 @@
-from werkzeug.exceptions import HTTPException
-from flask import Flask, abort, redirect, render_template, request, session, url_for
+from flask import Flask, render_template, session
 
 from bps.auth.route import authbp
 from bps.lot.route import lot
@@ -10,7 +9,7 @@ from bps.Payment.route import payment
 from bps.log.route import log
 
 from db import init_db
-from protect import protect
+from protect import adminProtect, protect
 
 app = Flask(__name__)
 
@@ -28,43 +27,43 @@ with app.app_context():
 
 @app.errorhandler(Exception)
 def catch_server_errors(e: Exception):
-        print(e)
-        return {'message': str(e)}, 500
+    print(e)
+    return {'message': str(e)}, 500
 
 
 @app.get('/')
-@protect
 def index():
     return render_template('index.html')
 
 
 @app.get('/lot')
+@protect
 def lots():
-    return render_template('lots.html')
+    return render_template('lots.html', type=session["object"]["type"])
 
 
 @app.get('/cust')
-@protect
+@adminProtect
 def cust():
-    return render_template('customer.html')
+    return render_template('customer.html', type=session["object"]["type"])
 
 
 @app.get('/res')
 @protect
 def reservation():
-    return render_template('reservation.html')
+    return render_template('reservation.html', type=session["object"]["type"])
 
 
 @app.get('/pay')
 @protect
 def payment():
-    return render_template('payment.html')
+    return render_template('payment.html', type=session["object"]["type"])
 
 
 @app.get('/log')
 @protect
 def log():
-    return render_template('logs.html')
+    return render_template('logs.html', type=session["object"]["type"])
 
 
 app.secret_key = 'some secret key'
@@ -72,19 +71,19 @@ app.secret_key = 'some secret key'
 
 @app.get('/log')
 def logs():
-    return render_template('logs.html')
+    return render_template('logs.html', type=session["object"]["type"])
 
 @app.get('/usersignup')
 def usersignup():
-    return render_template('usersignup.html')
+    return render_template('usersignup.html', type=session["object"]["type"])
 
 @app.get('/userlogin')
 def userlogin():
-    return render_template('userlogin.html')
+    return render_template('userlogin.html', type=session["object"]["type"])
 
-@app.get('/admin')
+@app.get('/adminlogin')
 def admin():
-    return render_template('admin.html')
+    return render_template('admin_login.html', type=session["object"]["type"])
 
 if __name__ == '__main__':
     app.run(debug=True, port=8887)

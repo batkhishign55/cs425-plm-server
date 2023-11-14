@@ -1,13 +1,38 @@
 
+from flask import redirect, session
 
-from flask import redirect, session, url_for
+
+def adminProtect(func):
+    def wrap(*args, **kwargs):
+        print(session)
+        if "object" not in session:
+            return redirect("/")
+        if session["object"]["type"] != "admin":
+            return {"message": "not authorized"}, 401
+        return func(*args, **kwargs)
+    wrap.__name__ = func.__name__
+
+    return wrap
+
+
+def userProtect(func):
+    def wrap(*args, **kwargs):
+        print(session)
+        if "object" not in session:
+            return redirect("/")
+        if session["object"]["type"] != "user":
+            return {"message": "not authorized"}, 401
+        return func(*args, **kwargs)
+    wrap.__name__ = func.__name__
+
+    return wrap
 
 
 def protect(func):
     def wrap(*args, **kwargs):
         print(session)
-        # if "email" not in session:
-        #     return redirect(url_for("auth.login"))
+        if "object" not in session:
+            return redirect("/")
         return func(*args, **kwargs)
     wrap.__name__ = func.__name__
 

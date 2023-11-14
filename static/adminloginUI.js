@@ -1,4 +1,7 @@
-window.addEventListener("load", function () {});
+window.addEventListener("load", function () {
+  // to-do check the session
+  console.log("loaded");
+});
 
 document
   .getElementById("form")
@@ -11,8 +14,9 @@ document
     for (const element of elements) {
       obj[element.id] = element.value;
     }
+    console.log(obj)
     
-    fetch("/auth/login", {
+    fetch("/auth/admin/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +26,7 @@ document
       .then(async (res) => {
         if (res.status === 200) {
           var base_url = window.location.origin;
-          window.location.replace(base_url + "/");
+          window.location.replace(base_url + "/lot");
         } else {
           const jsonresp = await res.json();
           showModal(jsonresp.message);
