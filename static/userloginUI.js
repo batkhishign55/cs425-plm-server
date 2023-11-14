@@ -26,7 +26,7 @@ window.addEventListener("load", function () {
         .then(async (res) => {
           if (res.status === 200) {
             var base_url = window.location.origin;
-            window.location.replace(base_url + "/lot");
+            window.location.replace(base_url + "/home");
           } else {
             const jsonresp = await res.json();
             showModal(jsonresp.message);

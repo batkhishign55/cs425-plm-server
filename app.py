@@ -7,9 +7,10 @@ from bps.customer.route import cust
 from bps.Reservation.route import reservation
 from bps.Payment.route import payment
 from bps.log.route import log
+from bps.vehicle.route import vehicle
 
 from db import init_db
-from protect import adminProtect, protect
+from protect import adminProtect, protect, userProtect
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ app.register_blueprint(cust)
 app.register_blueprint(reservation)
 app.register_blueprint(payment)
 app.register_blueprint(authbp)
+app.register_blueprint(vehicle)
 
 
 with app.app_context():
@@ -64,6 +66,12 @@ def payment():
 @protect
 def log():
     return render_template('logs.html', type=session["object"]["type"])
+
+
+@app.get('/home')
+@userProtect
+def home():
+    return render_template('user_home.html', type=session["object"]["type"])
 
 
 app.secret_key = 'some secret key'

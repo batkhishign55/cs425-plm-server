@@ -4,10 +4,9 @@ window.addEventListener("load", function () {
 
 class Api {
   async callApiLots() {
-    const resp = await fetch("/lot/api/");
     return await fetch("/lot/api/").then(async (res) => {
       if (res.status === 200) {
-        const jsonresp = await resp.json();
+        const jsonresp = await res.json();
         return jsonresp;
       } else {
         const jsonresp = await res.json();
