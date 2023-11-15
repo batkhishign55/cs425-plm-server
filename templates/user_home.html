@@ -1,13 +1,103 @@
 {% extends 'base.html' %}
-{% with type= type %}
+{% with type=type %}
     {% include "navbar.html" %}
 {% endwith %}
+
 {% block content %}
-<h2>user home</h2>
+<div class="container">
+    <h3>Parking Lots</h3>
 
+    <!-- Search input field with autocomplete -->
+    <div class="row">
+        <div class="col-md-6">
+            <input class="form-control" id="searchInput" type="text" placeholder="Search by Location or Zipcode">
+            <div id="suggestionsContainer" class="suggestions-container"></div>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary" onclick="searchLots()">Search</button>
+        </div>
+    </div>
 
+    <!-- Parking Lots Table -->
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Lot ID</th>
+                <th scope="col">Lot Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Total Spots</th>
+                <th scope="col">Available Spots</th>
+            </tr>
+        </thead>
+        <tbody id="lotListId">
+            <!-- Lot data will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 
-
 {% block script %}
+<script>
+    // Function to perform live search as the user types
+    function searchLots() {
+        const searchValue = document.getElementById("searchInput").value;
+        const apiUrl = `/api/search_lots?source=${searchValue}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const lots = data.parking_lots;
+                updateLotList(lots);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to update the lot list in the table
+    function updateLotList(lots) {
+        const lotListId = document.getElementById("lotListId");
+        lotListId.innerHTML = "";
+
+        lots.forEach(lot => {
+            const row = `<tr>
+                            <td>${lot.lot_id}</td>
+                            <td>${lot.lot_name}</td>
+                            <td>${lot.location}</td>
+                            <td>${lot.total_spots}</td>
+                            <td>${lot.available_spots}</td>
+                        </tr>`;
+            lotListId.innerHTML += row;
+        });
+    }
+
+    // Function to fetch search suggestions as the user types
+    function fetchSuggestions() {
+        const searchValue = document.getElementById("searchInput").value;
+        const apiUrl = `/api/search_suggestions?source=${searchValue}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const suggestionsContainer = document.getElementById("suggestionsContainer");
+                suggestionsContainer.innerHTML = "";
+
+                const suggestions = data.suggestions;
+                suggestions.forEach(suggestion => {
+                    const suggestionItem = document.createElement("div");
+                    suggestionItem.classList.add("suggestion-item", "mb-1", "p-2", "bg-light", "rounded");
+                    suggestionItem.innerText = suggestion;
+                    suggestionItem.addEventListener("click", () => {
+                        document.getElementById("searchInput").value = suggestion;
+                        suggestionsContainer.innerHTML = ""; // Clear suggestions
+                        searchLots(); // Trigger the search function
+                    });
+
+                    suggestionsContainer.appendChild(suggestionItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Event listener for input changes to fetch suggestions
+    document.getElementById("searchInput").addEventListener("input", fetchSuggestions);
+</script>
 {% endblock %}

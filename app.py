@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session,jsonify, request, abort
 
 from bps.auth.route import authbp
 from bps.lot.route import lot
@@ -9,7 +9,7 @@ from bps.Payment.route import payment
 from bps.log.route import log
 from bps.vehicle.route import vehicle
 
-from db import init_db
+from db import init_db,get_db
 from protect import adminProtect, protect, userProtect
 
 app = Flask(__name__)
@@ -93,5 +93,53 @@ def userlogin():
 def admin():
     return render_template('admin_login.html')
 
+
+@app.route('/api/search_suggestions')
+def search_suggestions():
+    search_value = request.args.get('source')
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    try:
+        # Use parameterized query to prevent SQL injection
+        query = (
+            "SELECT DISTINCT location, zipcode FROM parking_lot "
+            "WHERE location LIKE %(search_value)s OR zipcode LIKE %(search_value)s"
+        )
+        cursor.execute(query, {'search_value': f"%{search_value}%"})
+        suggestions = cursor.fetchall()
+
+        # Extract location and zipcode from the query result
+        suggestions = [f"{entry['location']}, {entry['zipcode']}" for entry in suggestions]
+    except Exception as e:
+        print(f"Error: {e}")
+        abort(500)
+    finally:
+        cursor.close()
+        db.close()
+
+    return jsonify(suggestions=suggestions)
+
+
+@app.route('/api/search_lots')
+def search_lots():
+    source = request.args.get('source')
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    # Assuming you have a 'parking_lots' table in your database
+    query = (
+        "SELECT lot_id, lot_name, location, total_spots, available_spots "
+        "FROM parking_lot WHERE location LIKE %s OR zipcode LIKE %s ORDER BY lot_id"
+    )
+    cursor.execute(query, (f"%{source}%", f"%{source}%"))
+    parking_lots_data = cursor.fetchall()
+
+    cursor.close()
+
+    return jsonify(parking_lots=parking_lots_data)
+    
 if __name__ == '__main__':
     app.run(debug=True, port=8887)
