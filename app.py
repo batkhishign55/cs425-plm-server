@@ -68,6 +68,12 @@ def log():
     return render_template('logs.html', type=session["object"]["type"])
 
 
+@app.get('/vehicle')
+@userProtect
+def vehicle():
+    return render_template('vehicle.html', type=session["object"]["type"])
+
+
 @app.get('/home')
 @userProtect
 def home():
