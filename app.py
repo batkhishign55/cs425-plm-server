@@ -21,6 +21,7 @@ app.register_blueprint(reservation)
 app.register_blueprint(payment)
 app.register_blueprint(authbp)
 app.register_blueprint(vehicle)
+app.register_blueprint(log)
 
 
 with app.app_context():

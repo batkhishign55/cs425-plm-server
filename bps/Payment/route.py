@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from protect import adminProtect
+from protect import protect
 
 from .controller import PaymentController
 
@@ -11,7 +11,7 @@ payment = Blueprint(
 
 
 @payment.before_request
-@adminProtect
+@protect
 def login_required():
     pass
 

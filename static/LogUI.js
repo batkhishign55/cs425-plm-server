@@ -6,6 +6,7 @@ class Api {
 async callApilogs() {
     const resp = await fetch("/log/api/");
     const jsonresp=await resp.json()
+    console.log(jsonresp)
     return jsonresp;
 }
 }
