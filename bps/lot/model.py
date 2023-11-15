@@ -20,11 +20,15 @@ class Lot:
 
     def updateLot(self, dict):
         mycursor = self.db.cursor()
-        mycursor.execute(
-            """UPDATE parking_lot
-                    SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s, emp_id=%s
-                WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['lotId'],))
-        self.db.commit()
+        try:
+            mycursor.execute(
+                """UPDATE parking_lot
+                        SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s, emp_id=%s
+                    WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['lotId'],))
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            raise e
         return mycursor.rowcount
 
     def deleteLot(self, dict):

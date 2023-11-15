@@ -58,7 +58,6 @@ class UI {
             <td>${cust[4]}</td>
             <td>${cust[5]}</td>
             <td>${cust[6]}</td>
-            <td>${cust[7]}</td>
             <td>
             <a href="/cust/${cust[0]}">
               <button type="button" class="btn btn-primary">Update</button></a>

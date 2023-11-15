@@ -1,4 +1,5 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
+{% include 'navbar.html' %}
 
 {% block content %}
 <div class="container">
@@ -23,4 +24,4 @@
 
 {% block script %}
 <script src={{ url_for('static', filename='logUI.js')}}></script>
-{% endblock %}
+{% endblock %}

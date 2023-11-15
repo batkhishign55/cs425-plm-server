@@ -28,15 +28,25 @@ document.getElementById("form").addEventListener(
       for (const element of elements) {
         obj[element.id] = element.value;
       }
-      const resp = await fetch("/lot/api/update", {
+      fetch("/lot/api/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-      });
-
-      const jsonresp = await resp.json();
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/");
+          } else {
+            const jsonresp = await res.json();
+            showModal(jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
     } // create
     else {
       const elements = document.getElementById("form").elements;
@@ -45,18 +55,26 @@ document.getElementById("form").addEventListener(
       for (const element of elements) {
         obj[element.id] = element.value;
       }
-      const resp = await fetch("/lot/api/create", {
+      fetch("/lot/api/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-      });
-
-      const jsonresp = await resp.json();
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/");
+          } else {
+            const jsonresp = await res.json();
+            showModal(jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
     }
-    var base_url = window.location.origin;
-    window.location.replace(base_url + "/");
   },
   true
 );

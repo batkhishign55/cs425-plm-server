@@ -1,23 +1,33 @@
-{% extends 'index.html' %}
-
+{% extends 'base.html' %}
+{% with type= type %}
+    {% include "navbar.html" %}
+{% endwith %}
 {% block content %}
 <div class="container">
-    <a href="/lot/">
-      <button type="button" class="btn btn-primary">Create</button>
-    </a>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Address</th>
-            <th scope="col">Spots</th>
-            <th scope="col">Employee</th>
-          </tr>
-        </thead>
-        <tbody id="lotListId">
-        </tbody>
-      </table>
+  <br>
+  <div class="row">
+    <div class="col-md-3">
+      <a href="/lot/">
+        <button type="button" class="btn btn-primary">Create</button>
+      </a>
+    </div>
+    <div class="col-md-6"><input class="form-control" id="searchInput" type="text" placeholder="Search..."></div>
+    <div class="col-md-3"></div>
+  </div>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Spots</th>
+        <th scope="col">Employee</th>
+      </tr>
+    </thead>
+    <tbody id="lotListId">
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}

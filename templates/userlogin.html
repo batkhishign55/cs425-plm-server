@@ -1,0 +1,33 @@
+{% extends "baselogin.html" %}
+{% block title %}User Login{% endblock title%}
+{% block form %}
+<h2 style="text-align: center;">User Login</h2>
+
+
+<div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+
+        <form id="form">
+            <div class="form-group">
+                <input class='form-control mt-2' placeholder="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class='form-control mt-2' placeholder="password" id="password">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info">Login</button>
+        </form>
+        <br>
+        <a class='text-bg-warning' href="/usersignup">New User? Signup</a>
+
+    </div>
+
+    <div class="col-md-4"></div>
+</div>
+{% endblock form%}
+
+{% block script %}
+<script src={{ url_for('static', filename='userloginUI.js')}}></script>
+{% endblock %}
