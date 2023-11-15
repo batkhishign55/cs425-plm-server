@@ -94,6 +94,7 @@ def admin():
     return render_template('admin_login.html')
 
 
+# Modify the search_suggestions route to include suggestions for lot_name
 @app.route('/api/search_suggestions')
 def search_suggestions():
     search_value = request.args.get('source')
@@ -101,27 +102,29 @@ def search_suggestions():
     db = get_db()
     cursor = db.cursor(dictionary=True)
 
-    try:
-        # Use parameterized query to prevent SQL injection
-        query = (
-            "SELECT DISTINCT location, zipcode FROM parking_lot "
-            "WHERE location LIKE %(search_value)s OR zipcode LIKE %(search_value)s"
-        )
-        cursor.execute(query, {'search_value': f"%{search_value}%"})
-        suggestions = cursor.fetchall()
+    # Query your database to get suggestions based on the input
+    # Adjust the query based on your database schema and requirements
+    query = (
+        "SELECT DISTINCT location, zipcode, lot_name FROM parking_lot "
+        "WHERE location LIKE %s OR zipcode LIKE %s OR lot_name LIKE %s"
+    )
+    cursor.execute(query, (f"%{search_value}%", f"%{search_value}%", f"%{search_value}%"))
+    suggestions_data = cursor.fetchall()
 
-        # Extract location and zipcode from the query result
-        suggestions = [f"{entry['location']}, {entry['zipcode']}" for entry in suggestions]
-    except Exception as e:
-        print(f"Error: {e}")
-        abort(500)
-    finally:
-        cursor.close()
-        db.close()
+    # Extract distinct suggestions for location, zipcode, and lot_name
+    locations = set(item['location'] for item in suggestions_data if item['location'])
+    zipcodes = set(item['zipcode'] for item in suggestions_data if item['zipcode'])
+    lot_names = set(item['lot_name'] for item in suggestions_data if item['lot_name'])
+    suggestions = list(locations | zipcodes | lot_names)
+
+    cursor.close()
+    db.close()
 
     return jsonify(suggestions=suggestions)
 
 
+
+# Modify the search_lots route to search by location, zipcode, and lot_name
 @app.route('/api/search_lots')
 def search_lots():
     source = request.args.get('source')
@@ -132,14 +135,17 @@ def search_lots():
     # Assuming you have a 'parking_lots' table in your database
     query = (
         "SELECT lot_id, lot_name, location, total_spots, available_spots "
-        "FROM parking_lot WHERE location LIKE %s OR zipcode LIKE %s ORDER BY lot_id"
+        "FROM parking_lot WHERE "
+        "location LIKE %s OR zipcode LIKE %s OR lot_name LIKE %s ORDER BY lot_id"
     )
-    cursor.execute(query, (f"%{source}%", f"%{source}%"))
+    cursor.execute(query, (f"%{source}%", f"%{source}%", f"%{source}%"))
     parking_lots_data = cursor.fetchall()
 
     cursor.close()
 
     return jsonify(parking_lots=parking_lots_data)
+
+
     
 if __name__ == '__main__':
     app.run(debug=True, port=8887)

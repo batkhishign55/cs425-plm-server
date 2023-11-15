@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 {% with type=type %}
-    {% include "navbar.html" %}
+{% include "navbar.html" %}
 {% endwith %}
 
 {% block content %}
 <div class="container">
-    <h3>Parking Lots</h3>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: center;">
+        <h3>Parking Lots</h3>
+    </div>
 
     <!-- Search input field with autocomplete -->
     <div class="row">
-        <div class="col-md-6">
-            <input class="form-control" id="searchInput" type="text" placeholder="Search by Location or Zipcode">
+        <div class="col-md-6 mx-auto">
+            <input class="form-control" id="searchInput" type="text"
+                placeholder="Search by Location, Zipcode, or Lot Name">
             <div id="suggestionsContainer" class="suggestions-container"></div>
-        </div>
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary" onclick="searchLots()">Search</button>
         </div>
     </div>
 
     <!-- Parking Lots Table -->
-    <table class="table mt-3">
+    <table class="table mt-3 mx-auto">
         <thead>
             <tr>
                 <th scope="col">Lot ID</th>
@@ -27,12 +30,40 @@
                 <th scope="col">Location</th>
                 <th scope="col">Total Spots</th>
                 <th scope="col">Available Spots</th>
+                <th scope="col">Reserve</th>
             </tr>
         </thead>
         <tbody id="lotListId">
             <!-- Lot data will be dynamically added here -->
         </tbody>
     </table>
+</div>
+
+<!-- New form for each parking lot -->
+<div class="container" id="reserveFormContainer" style="display: none;">
+    <form id="reserveForm">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="startTime">Start Time:</label>
+                <input type="datetime-local" id="startTime" class="form-control" required>
+            </div>
+            <div class="col-md-12">
+                <label for="endTime">End Time:</label>
+                <input type="datetime-local" id="endTime" class="form-control" required>
+            </div>
+            <div class="col-md-12">
+                <label for="totalDuration">Total Duration:</label>
+                <input type="text" id="totalDuration" class="form-control" readonly>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <br>
+                <button type="button" class="btn btn-primary" id="reserveSelected" disabled>Reserve Selected</button>
+                <button type="button" class="btn btn-secondary" id="cancelReservation">Cancel</button>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
 
@@ -64,10 +95,111 @@
                             <td>${lot.location}</td>
                             <td>${lot.total_spots}</td>
                             <td>${lot.available_spots}</td>
+                            <td><button type="button" class="btn btn-success reserve-button" data-lot-id="${lot.lot_id}" data-lot-name="${lot.lot_name}" data-location="${lot.location}">Reserve</button></td>
                         </tr>`;
             lotListId.innerHTML += row;
         });
+
+        // Add event listeners to Reserve buttons
+        const reserveButtons = document.getElementsByClassName("reserve-button");
+        Array.from(reserveButtons).forEach(button => {
+            button.addEventListener("click", () => {
+                showReserveForm(button);
+            });
+        });
     }
+
+    // Function to show the Reserve form for a specific parking lot
+    function showReserveForm(button) {
+        // Set the form values based on the selected parking lot
+        document.getElementById("reserveForm").reset();
+        document.getElementById("startTime").min = getCurrentDateTime();
+        document.getElementById("endTime").min = getCurrentDateTime();
+        document.getElementById("reserveFormContainer").style.display = "block";
+
+        // Update total duration when start time or end time changes
+        document.getElementById("startTime").addEventListener("input", updateTotalDuration);
+        document.getElementById("endTime").addEventListener("input", updateTotalDuration);
+
+        // Enable Reserve Selected button when both start and end times are selected
+        document.getElementById("reserveSelected").disabled = true;
+        document.getElementById("reserveSelected").addEventListener("click", () => {
+            confirmReservation(button);
+        });
+
+        // Add event listener to Cancel button
+        document.getElementById("cancelReservation").addEventListener("click", () => {
+            hideReserveForm();
+        });
+    }
+
+    // Function to update the total duration based on selected start and end times
+    function updateTotalDuration() {
+        const startTime = new Date(document.getElementById("startTime").value);
+        const endTime = new Date(document.getElementById("endTime").value);
+
+        if (!isNaN(startTime) && !isNaN(endTime) && endTime > startTime) {
+            const durationInMinutes = (endTime - startTime) / (1000 * 60);
+            const hours = Math.floor(durationInMinutes / 60);
+            const minutes = Math.round(durationInMinutes % 60);
+
+            if (hours >= 24) {
+                const days = Math.floor(hours / 24);
+                document.getElementById("totalDuration").value =
+                `${days} day(s) ${hours % 24} hours ${minutes} minutes`;
+            } else {
+                document.getElementById("totalDuration").value = `${hours} hours ${minutes} minutes`;
+            }
+
+            document.getElementById("reserveSelected").disabled = false;
+        } else {
+            document.getElementById("totalDuration").value = "";
+            document.getElementById("reserveSelected").disabled = true;
+        }
+    }
+
+
+    // Function to get the current date and time in the required format for the min attribute
+    function getCurrentDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const formattedDateTime =
+            `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        return formattedDateTime;
+    }
+
+    // Function to confirm the reservation
+    function confirmReservation(button) {
+        const lotName = button.getAttribute("data-lot-name");
+        const location = button.getAttribute("data-location");
+        const startTime = document.getElementById("startTime").value;
+        const endTime = document.getElementById("endTime").value;
+
+        const confirmationMessage =
+            `Confirm reservation for ${lotName} at ${location} from ${startTime} to ${endTime}?`;
+        const isConfirmed = confirm(confirmationMessage);
+
+        if (isConfirmed) {
+            console.log("Reservation confirmed!");
+            // Reset the form and hide it after confirmation
+            hideReserveForm();
+        }
+    }
+
+    // Function to hide the Reserve form and reset its values
+    function hideReserveForm() {
+        document.getElementById("reserveFormContainer").style.display = "none";
+        document.getElementById("reserveForm").reset();
+        document.getElementById("startTime").removeEventListener("input", updateTotalDuration);
+        document.getElementById("endTime").removeEventListener("input", updateTotalDuration);
+    }
+
+    // Event listener for input changes to fetch suggestions
+    document.getElementById("searchInput").addEventListener("input", fetchSuggestions);
 
     // Function to fetch search suggestions as the user types
     function fetchSuggestions() {
@@ -97,7 +229,6 @@
             .catch(error => console.error('Error:', error));
     }
 
-    // Event listener for input changes to fetch suggestions
     document.getElementById("searchInput").addEventListener("input", fetchSuggestions);
 </script>
 {% endblock %}
