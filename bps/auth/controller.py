@@ -16,7 +16,6 @@ class AuthController:
 
     def logout(self):
         session.pop('object')
-        print("logged out")
         return {'message': "success"}
 
     def userLogin(self):
