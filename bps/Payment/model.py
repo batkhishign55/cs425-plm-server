@@ -28,3 +28,14 @@ class Payment:
             if str(payment.get('id')) == id:
                 return payment
         return {}
+
+
+    def analytics(self):
+        mycursor = self.db.cursor()
+
+        mycursor.execute("""SELECT cust_id, pmt_mode,sum(pmt_amt) FROM payment
+                            GROUP BY cust_id, pmt_mode
+                            with ROLLUP
+                            ORDER BY cust_id, pmt_mode;""")
+        res = mycursor.fetchall()
+        return res

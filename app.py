@@ -81,6 +81,12 @@ def home():
     return render_template('user_home.html', type=session["object"]["type"])
 
 
+@app.get('/analytics')
+@adminProtect
+def analytics():
+    return render_template('analytics.html')
+
+
 app.secret_key = 'some secret key'
 
 

@@ -17,5 +17,10 @@ def login_required():
 
 
 @payment.get('/api/')
-def lotList():
+def paymentList():
     return PaymentController().get()
+
+
+@payment.get('/api/analytics/')
+def analytics():
+    return PaymentController().analytics()
