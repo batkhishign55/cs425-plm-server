@@ -37,3 +37,12 @@ def protect(func):
     wrap.__name__ = func.__name__
 
     return wrap
+
+def getType():
+    return session['object']['type']
+
+def getUserId():
+    return session['object']['user_id']
+
+def getAdminId():
+    return session['object']['emp_id']

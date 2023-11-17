@@ -11,7 +11,7 @@ class AuthController:
         if (not data):
             return {'message': "admin user not found!"}, 404
 
-        session['object'] = {"username": request.json['username'], "type": "admin"}
+        session['object'] = {"username": request.json['username'], "type": "admin", "emp_id": str(data[0])}
         return {'data': data}
 
     def logout(self):
@@ -23,5 +23,5 @@ class AuthController:
         if (not data):
             return {'message': "user not found!"}, 404
 
-        session['object'] = {"username": request.json['username'], "type": "user"}
+        session['object'] = {"username": request.json['username'], "type": "user", "user_id":str(data[0])}
         return {'data': data}

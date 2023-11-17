@@ -1,14 +1,14 @@
 
 from db import get_db
+from protect import getUserId
 
-# to-do should make it dynamic
 class Vehicle:
     def __init__(self):
         self.db = get_db()
 
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute("""SELECT * FROM vehicle where cust_id = 118 """)
+        mycursor.execute("""SELECT * FROM vehicle where cust_id=%s""", (getUserId(),))
 
         return mycursor.fetchall()
 
