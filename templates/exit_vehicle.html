@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% with type=type %}
+    {% include "navbar.html" %}
+{% endwith %}
+
+{% block content %}
+<div class="container">
+    <div style="text-align: center;">
+        <h3>Exit Vehicle</h3>
+    </div>
+
+    <form>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type:</label>
+                    <input type="text" id="vehicleType" name="vehicle_type" class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label for="spotType">Spot Type:</label>
+                    <input type="text" id="spotType" name="spot_type" class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3 text-center">
+                <div class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-primary" onclick="confirmExit()">Exit Vehicle</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <style>
+        /* Add your custom styles here */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        h3 {
+            color: #007bff; /* Blue heading */
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        /* Add more styles as needed */
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve the selected values from session storage
+            const selectedVehicleType = sessionStorage.getItem('selectedVehicleType') || 'None';
+            const selectedSpotType = sessionStorage.getItem('selectedSpotType') || 'None';
+
+            // Update the disabled input fields with the selected values
+            document.getElementById('vehicleType').value = selectedVehicleType;
+            document.getElementById('spotType').value = selectedSpotType;
+        });
+
+        function confirmExit() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const spotType = document.getElementById('spotType').value;
+            const confirmationMessage = `Confirm exit for Vehicle Type: ${vehicleType}, Spot Type: ${spotType}?`;
+            const isConfirmed = confirm(confirmationMessage);
+
+            if (isConfirmed) {
+                // Optionally, you can perform additional actions here
+
+                // Redirect to the desired page (replace '/redirect_destination' with the actual path)
+                window.location.href = '/home';
+            }
+        }
+    </script>
+</div>
+{% endblock %}

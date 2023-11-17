@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% with type=type %}
+    {% include "navbar.html" %}
+{% endwith %}
+
+{% block content %}
+<div class="container">
+    <div style="text-align: center;">
+        <h3>Park a Vehicle</h3>
+    </div>
+
+    <form id="parkVehicleForm">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type:</label>
+                    <select id="vehicleType" name="vehicle_type" class="form-control" onchange="checkFields()">
+                        <option value="None" selected disabled hidden>Select Your Vehicle Type</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="truck">Truck</option>
+                        <option value="motorcycle">Motorcycle</option>
+                        <option value="suv">SUV</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <br>
+                    <label for="spotType">Spot Type:</label>
+                    <select id="spotType" name="spot_type" class="form-control" onchange="checkFields()">
+                        <option value="None" selected disabled hidden>Select Your Spot Type</option>
+                        <option value="standard">Standard</option>
+                        <option value="valet">Valet</option>
+                        <option value="charging">Charging</option>
+                        <option value="disabled">Disabled</option>
+                        <option value="motorcycle">Motorcycle</option>
+                        <option value="reserved">Reserved</option>
+                        <option value="truck">Truck</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3 text-center">
+                <div class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-primary" onclick="confirmPark()" id="parkButton" disabled>Park Vehicle</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Add your custom styles here */
+    body {
+        background-color: #f8f9fa; /* Light gray background */
+    }
+
+    h3 {
+        color: #007bff; /* Blue heading */
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    /* Add more styles as needed */
+</style>
+
+<script>
+    function checkFields() {
+        const vehicleType = document.getElementById('vehicleType').value;
+        const spotType = document.getElementById('spotType').value;
+        const parkButton = document.getElementById('parkButton');
+
+        if (vehicleType !== 'None' && spotType !== 'None') {
+            parkButton.disabled = false;
+        } else {
+            parkButton.disabled = true;
+        }
+    }
+
+    function confirmPark() {
+        const vehicleType = document.getElementById('vehicleType').value;
+        const spotType = document.getElementById('spotType').value;
+        const confirmationMessage = `Confirm parking for Vehicle Type: ${vehicleType}, Spot Type: ${spotType}?`;
+        const isConfirmed = confirm(confirmationMessage);
+
+        if (isConfirmed) {
+            // Store the selected values in session storage
+            sessionStorage.setItem('selectedVehicleType', vehicleType);
+            sessionStorage.setItem('selectedSpotType', spotType);
+
+            // Redirect to the /exit page
+            window.location.href = '/exit';
+        }
+    }
+    function parkVehicle() {
+        const form = document.getElementById('parkVehicleForm');
+        const formData = new FormData(form);
+
+        // Store the selected values in session storage
+        sessionStorage.setItem('selectedVehicleType', formData.get('vehicle_type'));
+        sessionStorage.setItem('selectedSpotType', formData.get('spot_type'));
+
+        fetch('/park', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // Redirect to the /exit page
+                window.location.href = '/exit';
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An unexpected error occurred.');
+        });
+    }
+
+</script>
+
+{% endblock %}

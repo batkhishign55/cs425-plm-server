@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session,jsonify, request, abort
+from flask import Flask, render_template, session,jsonify, request, abort, session
 
 from bps.auth.route import authbp
 from bps.lot.route import lot
@@ -73,6 +73,22 @@ def log():
 def home():
     return render_template('user_home.html', type=session["object"]["type"])
 
+@app.get('/park')
+@userProtect
+def park():
+    return render_template('park_vehicle.html', type=session["object"]["type"])
+
+@app.get('/exit')
+@userProtect
+def exit():
+    # Retrieve the values from session storage
+    selected_vehicle_type = session.get('selectedVehicleType', 'None')
+    selected_spot_type = session.get('selectedSpotType', 'None')
+
+    # Pass the values to the template
+    return render_template('exit_vehicle.html', type=session["object"]["type"],selected_vehicle_type=selected_vehicle_type, selected_spot_type=selected_spot_type)
+
+
 
 app.secret_key = 'some secret key'
 
@@ -94,7 +110,7 @@ def admin():
     return render_template('admin_login.html')
 
 
-# Modify the search_suggestions route to include suggestions for lot_name
+#Modify the search_suggestions route to include suggestions for lot_name
 @app.route('/api/search_suggestions')
 def search_suggestions():
     search_value = request.args.get('source')
@@ -146,6 +162,42 @@ def search_lots():
     return jsonify(parking_lots=parking_lots_data)
 
 
+
+
+@app.route('/park', methods=['POST'])
+@protect  # You may want to protect this route based on user roles
+def park_vehicle():
+    try:
+        # Retrieve form data
+        vehicle_type = request.form.get('vehicle_type')
+        parking_lot = request.form.get('parking_lot')  # Update with the actual name of the field
+        spot_type = request.form.get('spot_type')
+
+        # Perform actions to park the vehicle, update the database, etc.
+
+        # Return a success response
+        return jsonify({'status': 'success', 'message': 'Vehicle parked successfully'})
+    except Exception as e:
+        # Handle errors
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/exit', methods=['POST'])
+@userProtect
+def exit_vehicle():
+    try:
+        # Retrieve the values from the form data
+        selected_vehicle_type = request.form.get('selected_vehicle_type')
+        selected_spot_type = request.form.get('selected_spot_type')
+
+        # Perform any additional actions needed with the selected values
+
+        # Return a success response
+        return jsonify({'status': 'success', 'message': 'Vehicle exited successfully'})
+    except Exception as e:
+        # Handle errors
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+    
     
 if __name__ == '__main__':
     app.run(debug=True, port=8887)

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% with type=type %}
+{% include "navbar.html" %}
+{% endwith %}
 
 {% block content %}
 <div class="container pt-5 pl-2">
