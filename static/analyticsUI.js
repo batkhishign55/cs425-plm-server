@@ -152,7 +152,7 @@ class UI {
           },
           title: {
             display: true,
-            text: "Chart.js Doughnut Chart",
+            text: "Payment methods distribution",
           },
         },
       },
