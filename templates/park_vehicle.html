@@ -41,6 +41,9 @@
                 </div>
             </div>
 
+            <!-- Add this hidden input field for entry time -->
+            <input type="hidden" id="entryTime" name="entry_time">
+
             <div class="col-md-6 offset-md-3 text-center">
                 <div class="form-group">
                     <br>
@@ -49,81 +52,51 @@
             </div>
         </div>
     </form>
-</div>
 
-<style>
-    /* Add your custom styles here */
-    body {
-        background-color: #f8f9fa; /* Light gray background */
-    }
-
-    h3 {
-        color: #007bff; /* Blue heading */
-    }
-
-    label {
-        font-weight: bold;
-    }
-
-    /* Add more styles as needed */
-</style>
-
-<script>
-    function checkFields() {
-        const vehicleType = document.getElementById('vehicleType').value;
-        const spotType = document.getElementById('spotType').value;
-        const parkButton = document.getElementById('parkButton');
-
-        if (vehicleType !== 'None' && spotType !== 'None') {
-            parkButton.disabled = false;
-        } else {
-            parkButton.disabled = true;
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
         }
-    }
 
-    function confirmPark() {
+        h3 {
+            color: #007bff; /* Blue heading */
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        function checkFields() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const spotType = document.getElementById('spotType').value;
+            const parkButton = document.getElementById('parkButton');
+
+            if (vehicleType !== 'None' && spotType !== 'None') {
+                parkButton.disabled = false;
+            } else {
+                parkButton.disabled = true;
+            }
+        }
+
+        function confirmPark() {
         const vehicleType = document.getElementById('vehicleType').value;
         const spotType = document.getElementById('spotType').value;
         const confirmationMessage = `Confirm parking for Vehicle Type: ${vehicleType}, Spot Type: ${spotType}?`;
         const isConfirmed = confirm(confirmationMessage);
 
         if (isConfirmed) {
-            // Store the selected values in session storage
+            // Store the entry time in session storage as a timestamp
+            const entryTime = Date.now(); // Store time as a timestamp
             sessionStorage.setItem('selectedVehicleType', vehicleType);
             sessionStorage.setItem('selectedSpotType', spotType);
+            sessionStorage.setItem('entryTime', entryTime);
 
             // Redirect to the /exit page
             window.location.href = '/exit';
         }
     }
-    function parkVehicle() {
-        const form = document.getElementById('parkVehicleForm');
-        const formData = new FormData(form);
-
-        // Store the selected values in session storage
-        sessionStorage.setItem('selectedVehicleType', formData.get('vehicle_type'));
-        sessionStorage.setItem('selectedSpotType', formData.get('spot_type'));
-
-        fetch('/park', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert(data.message);
-                // Redirect to the /exit page
-                window.location.href = '/exit';
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An unexpected error occurred.');
-        });
-    }
-
-</script>
-
+    </script>
+</div>
 {% endblock %}

@@ -9,19 +9,40 @@
         <h3>Exit Vehicle</h3>
     </div>
 
-    <form>
+    <form id="exitVehicleForm">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                     <label for="vehicleType">Vehicle Type:</label>
-                    <input type="text" id="vehicleType" name="vehicle_type" class="form-control" disabled>
+                    <input type="text" id="vehicleType" name="vehicle_type" class="form-control" value="{{ selected_vehicle_type }}" disabled>
                 </div>
             </div>
 
             <div class="col-md-6 offset-md-3">
                 <div class="form-group">
                     <label for="spotType">Spot Type:</label>
-                    <input type="text" id="spotType" name="spot_type" class="form-control" disabled>
+                    <input type="text" id="spotType" name="spot_type" class="form-control" value="{{ selected_spot_type }}" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label for="entryTime">Entry Time:</label>
+                    <input type="text" id="entryTime" name="entry_time" class="form-control" value="{{ entry_time }}" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3" id="exitFields" style="display: none;">
+                <div class="form-group">
+                    <label for="exitTime">Exit Time:</label>
+                    <input type="text" id="exitTime" name="exit_time" class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3" id="durationFields" style="display: none;">
+                <div class="form-group">
+                    <label for="duration">Duration:</label>
+                    <input type="text" id="duration" name="duration" class="form-control" disabled>
                 </div>
             </div>
 
@@ -35,7 +56,6 @@
     </form>
 
     <style>
-        /* Add your custom styles here */
         body {
             background-color: #f8f9fa; /* Light gray background */
         }
@@ -47,33 +67,53 @@
         label {
             font-weight: bold;
         }
-
-        /* Add more styles as needed */
     </style>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Retrieve the selected values from session storage
             const selectedVehicleType = sessionStorage.getItem('selectedVehicleType') || 'None';
             const selectedSpotType = sessionStorage.getItem('selectedSpotType') || 'None';
+            const entryTime = parseInt(sessionStorage.getItem('entryTime')) || 0; // Parse as an integer
 
             // Update the disabled input fields with the selected values
             document.getElementById('vehicleType').value = selectedVehicleType;
             document.getElementById('spotType').value = selectedSpotType;
+
+            // Convert entry time to a more readable format
+            const formattedEntryTime = new Date(entryTime).toLocaleString();
+            document.getElementById('entryTime').value = formattedEntryTime;
         });
 
         function confirmExit() {
-            const vehicleType = document.getElementById('vehicleType').value;
-            const spotType = document.getElementById('spotType').value;
-            const confirmationMessage = `Confirm exit for Vehicle Type: ${vehicleType}, Spot Type: ${spotType}?`;
-            const isConfirmed = confirm(confirmationMessage);
+            // Calculate and set the exit time
+            const exitTime = new Date().toLocaleString();
+            document.getElementById('exitTime').value = exitTime;
 
-            if (isConfirmed) {
-                // Optionally, you can perform additional actions here
+            // Calculate and set the duration
+            const entryTime = parseInt(sessionStorage.getItem('entryTime')) || 0;
+            const duration = calculateDuration(entryTime);
+            document.getElementById('duration').value = duration;
 
-                // Redirect to the desired page (replace '/redirect_destination' with the actual path)
-                window.location.href = '/home';
-            }
+            // Show the "Exit Time" and "Duration" fields
+            document.getElementById('exitFields').style.display = 'block';
+            document.getElementById('durationFields').style.display = 'block';
+        }
+
+        function calculateDuration(entryTime) {
+            const exitTime = new Date();
+            const duration = exitTime - entryTime;
+            const formattedDuration = formatDuration(duration);
+            return formattedDuration;
+        }
+
+        function formatDuration(duration) {
+            const milliseconds = parseInt(duration % 1000);
+            const seconds = parseInt((duration / 1000) % 60);
+            const minutes = parseInt((duration / (1000 * 60)) % 60);
+            const hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+            return `${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
         }
     </script>
 </div>
