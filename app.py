@@ -21,6 +21,7 @@ app.register_blueprint(reservation)
 app.register_blueprint(payment)
 app.register_blueprint(authbp)
 app.register_blueprint(vehicle)
+app.register_blueprint(log)
 
 
 with app.app_context():
@@ -68,6 +69,12 @@ def log():
     return render_template('logs.html', type=session["object"]["type"])
 
 
+@app.get('/vehicle')
+@userProtect
+def vehicle():
+    return render_template('vehicle.html', type=session["object"]["type"])
+
+
 @app.get('/home')
 @userProtect
 def home():
@@ -88,6 +95,12 @@ def exit():
     # Pass the values to the template
     return render_template('exit_vehicle.html', type=session["object"]["type"],selected_vehicle_type=selected_vehicle_type, selected_spot_type=selected_spot_type)
 
+
+
+@app.get('/analytics')
+@adminProtect
+def analytics():
+    return render_template('analytics.html')
 
 
 app.secret_key = 'some secret key'

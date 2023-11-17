@@ -9,35 +9,23 @@ class VehicleController:
     def get(self):
         data = self.model.get()
         if not data:
-            abort(404)
-        return {'status': True, 'data': data, 'message': ''}
+            return {'message': 'no data found!'}, 404
+        return {'data': data}
 
     def getSingleVehicle(self, vehicle_id):
         data = self.model.getSingleVehicle(vehicle_id)
         if not data:
-            abort(404)
-        return {'status': True, 'data': data, 'message': ''}
+            return {'message': 'no data found!'}, 404
+        return {'data': data}
 
     def updateVehicle(self):
-        try:
-            data = self.model.updateVehicle(request.json)
-        except Exception as e:
-            print(str(e))
-            abort(500, str(e))
-        return {'status': True, 'data': data, 'message': ''}
+        data = self.model.updateVehicle(request.json)
+        return {'data': data}
 
     def deleteVehicle(self):
-        try:
-            data = self.model.deleteVehicle(request.json)
-        except Exception as e:
-            print(str(e))
-            abort(500, str(e))
-        return {'status': True, 'data': data, 'message': ''}
+        data = self.model.deleteVehicle(request.json)
+        return {'data': data}
 
     def createVehicle(self):
-        try:
-            data = self.model.createVehicle(request.json)
-        except Exception as e:
-            print(str(e))
-            abort(500, str(e))
-        return {'status': True, 'data': data, 'message': ''}
+        data = self.model.createVehicle(request.json)
+        return {'data': data}

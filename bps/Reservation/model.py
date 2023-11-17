@@ -1,23 +1,30 @@
-import json
-import pathlib
-from flask import g
 
 from db import get_db
+from protect import getAdminId, getType, getUserId
+
 
 class Reservation:
     def __init__(self):
         self.db = get_db()
-    
+
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute("SELECT * FROM reservation;")
+
+        if getType() == 'admin':
+            mycursor.execute("""SELECT * FROM reservation r
+                                JOIN parking_spot s on r.spot_id = s.spot_id
+                                JOIN parking_lot l on s.lot_id = l.lot_id
+                             where l.emp_id=%s""", (getAdminId(),))
+        else:
+            mycursor.execute("""SELECT * FROM reservation where cust_id=%s""", (getUserId(),))
+            
         res = mycursor.fetchall()
-        print(res)
         return res
 
     def getSingleReservation(self, id):
-        reservation=self.collections.get('reservation')
+        # to-do have to fix this, shouldn't query all data and filter
+        reservation = self.collections.get('reservation')
         for reserve in reservation:
-            if str(reserve.get('id'))==id: 
+            if str(reserve.get('id')) == id:
                 return reserve
         return {}

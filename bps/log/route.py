@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from protect import adminProtect
+from protect import protect
 
 from .controller import logController
 
@@ -11,7 +11,7 @@ log = Blueprint(
 
 
 @log.before_request
-@adminProtect
+@protect
 def login_required():
     pass
 

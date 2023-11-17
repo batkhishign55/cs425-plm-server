@@ -1,23 +1,41 @@
-import json
-import pathlib
-from flask import g
 
 from db import get_db
+from protect import getAdminId, getType, getUserId
+
 
 class Payment:
     def __init__(self):
         self.db = get_db()
-    
+
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute("SELECT * FROM payment;")
+
+        if getType() == 'admin':
+            mycursor.execute("""SELECT * FROM payment p
+                             JOIN parking_log lg on lg.log_id = p.log_id
+                             JOIN parking_spot s on s.spot_id = lg.spot_id
+                             JOIN parking_lot l on l.lot_id = s.lot_id
+                             where l.emp_id=%s""", (getAdminId(),))
+        else:
+            mycursor.execute("""SELECT * FROM payment where cust_id=%s""", (getUserId(),))
         res = mycursor.fetchall()
-        print(res)
         return res
 
     def getSinglePayment(self, id):
-        payments=self.collections.get('payment')
+        # to-do have to fix this, shouldn't query all data and filter
+        payments = self.collections.get('payment')
         for payment in payments:
-            if str(payment.get('id'))==id: 
+            if str(payment.get('id')) == id:
                 return payment
         return {}
+
+
+    def analytics(self):
+        mycursor = self.db.cursor()
+
+        mycursor.execute("""SELECT cust_id, pmt_mode,sum(pmt_amt) FROM payment
+                            GROUP BY cust_id, pmt_mode
+                            with ROLLUP
+                            ORDER BY cust_id, pmt_mode;""")
+        res = mycursor.fetchall()
+        return res

@@ -1,5 +1,6 @@
 
 from db import get_db
+from protect import getAdminId
 
 
 class Lot:
@@ -9,7 +10,10 @@ class Lot:
     def get(self):
         mycursor = self.db.cursor()
         mycursor.execute(
-            """SELECT pl.*, e.first_name, e.last_name FROM parking_lot pl LEFT JOIN employee e on e.emp_id=pl.emp_id """)
+            """SELECT pl.*, e.first_name, e.last_name
+                    FROM parking_lot pl
+                LEFT JOIN employee e on e.emp_id=pl.emp_id
+                where pl.emp_id=%s """, (getAdminId(),))
         return mycursor.fetchall()
 
     def getSingleLot(self, lot_id):

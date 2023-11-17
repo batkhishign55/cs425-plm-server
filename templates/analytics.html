@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% with type= type %}
+    {% include "navbar.html" %}
+{% endwith %}
+{% block content %}
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col-md-6"><input class="form-control" id="searchInput" type="text" placeholder="Search..."></div>
+    <div class="col-md-6"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Customer</th>
+                <th scope="col">Method</th>
+                <th scope="col">Sum</th>
+            </tr>
+            </thead>
+            <tbody id="lotListId">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <canvas id="barChart"></canvas>
+        <br>
+        <div class="row">
+            <div class="col-md-2"></div>    
+          <div class="col-md-8">
+            <canvas id="donutChart"></canvas>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src={{ url_for('static', filename='analyticsUI.js')}}></script>
+{% endblock %}

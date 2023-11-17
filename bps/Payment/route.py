@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from protect import adminProtect
+from protect import protect
 
 from .controller import PaymentController
 
@@ -11,11 +11,16 @@ payment = Blueprint(
 
 
 @payment.before_request
-@adminProtect
+@protect
 def login_required():
     pass
 
 
 @payment.get('/api/')
-def lotList():
+def paymentList():
     return PaymentController().get()
+
+
+@payment.get('/api/analytics/')
+def analytics():
+    return PaymentController().analytics()

@@ -5,7 +5,6 @@ window.addEventListener("load", async function () {
       "Content-Type": "application/json",
     },
   }).then((res) => {
-    console.log(res);
     if (res.status == 200) {
       var base_url = window.location.origin;
       window.location.replace(base_url + "/lot");
@@ -24,7 +23,6 @@ document
     for (const element of elements) {
       obj[element.id] = element.value;
     }
-    console.log(obj);
 
     fetch("/auth/admin/login", {
       method: "POST",
@@ -39,10 +37,12 @@ document
           window.location.replace(base_url + "/lot");
         } else {
           const jsonresp = await res.json();
-          showModal(jsonresp.message);
+          document.getElementById("alert").innerHTML = jsonresp.message;
+          document.getElementById("alert").style.display = "block";
         }
       })
       .catch((e) => {
-        showModal(e);
+        document.getElementById("alert").innerHTML = e;
+        document.getElementById("alert").style.display = "block";
       });
   });
