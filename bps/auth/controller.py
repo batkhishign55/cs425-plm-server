@@ -29,7 +29,7 @@ class AuthController:
         
         print(data)
         if data[7] != request.json['password']:
-            return {'message': "admin password incorrect!"}, 401
+            return {'message': "user password incorrect!"}, 401
 
         session['object'] = {"username": request.json['username'], "type": "user", "user_id":str(data[0])}
         return {'data': data}
