@@ -160,11 +160,14 @@ class UI {
   }
 
   createRow(payment) {
+    payment[0] = payment[0] == null ? "" : payment[0];
+    payment[1] = payment[1] == null ? "" : payment[1];
+    payment[2] = payment[2] == null ? "" : payment[2];
     const cardTemplate = `
           <tr>
               <th scope="row">${payment[0]}</th>
               <td>${payment[1]}</td>
-              <td>${payment[2]}</td>
+              <td>$${payment[2]}</td>
               
           </tr>
           `;
@@ -180,46 +183,3 @@ $(document).ready(function () {
     });
   });
 });
-
-// const ctx = document.getElementById("myChart");
-
-// new Chart(ctx, {
-//   type: "bar",
-//   data: {
-//     labels: ["zl", "lalraa", "lalraaa"],
-//     datasets: [
-//       {
-//         label: "Dataset 1",
-//         data: [1, 2, 2],
-//         backgroundColor: "rgb(255, 99, 132)",
-//       },
-//       {
-//         label: "Dataset 2",
-//         data: [1, 2, 2],
-//         backgroundColor: "rgb(54, 162, 235)",
-//       },
-//       {
-//         label: "Dataset 3",
-//         data: [1, 2, 2],
-//         backgroundColor: "rgb(75, 192, 192)",
-//       },
-//     ],
-//   },
-//   options: {
-//     plugins: {
-//       title: {
-//         display: true,
-//         text: "Chart.js Bar Chart - Stacked",
-//       },
-//     },
-//     responsive: true,
-//     scales: {
-//       x: {
-//         stacked: true,
-//       },
-//       y: {
-//         stacked: true,
-//       },
-//     },
-//   },
-// });
