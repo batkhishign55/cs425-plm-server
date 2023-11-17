@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from protect import adminProtect
+from protect import protect
 
 from .controller import ReservationController
 
@@ -11,7 +11,7 @@ reservation = Blueprint(
 
 
 @reservation.before_request
-@adminProtect
+@protect
 def login_required():
     pass
 

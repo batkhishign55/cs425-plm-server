@@ -1,16 +1,14 @@
 
 from db import get_db
 
-
+# to-do should make it dynamic
 class Vehicle:
     def __init__(self):
         self.db = get_db()
 
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute(
-            # """SELECT pl.*, e.vehicle_id, e.cust_id FROM vehicle pl LEFT JOIN employee e on e.emp_id=pl.emp_id """)\
-            """SELECT * FROM vehicle where cust_id = 118 """)
+        mycursor.execute("""SELECT * FROM vehicle where cust_id = 118 """)
 
         return mycursor.fetchall()
 
@@ -25,7 +23,7 @@ class Vehicle:
         mycursor.execute(
             """UPDATE vehicle
                     SET plate_number=%s, vehicle_type=%s
-                WHERE vehicle_id=%s""", (dict['plateNumber'], dict['type'],dict['vehicleId'],))
+                WHERE vehicle_id=%s""", (dict['plateNumber'], dict['type'], dict['vehicleId'],))
         self.db.commit()
         return mycursor.rowcount
 

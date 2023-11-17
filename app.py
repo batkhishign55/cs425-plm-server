@@ -21,6 +21,7 @@ app.register_blueprint(reservation)
 app.register_blueprint(payment)
 app.register_blueprint(authbp)
 app.register_blueprint(vehicle)
+app.register_blueprint(log)
 
 
 with app.app_context():
@@ -66,6 +67,12 @@ def payment():
 @protect
 def log():
     return render_template('logs.html', type=session["object"]["type"])
+
+
+@app.get('/vehicle')
+@userProtect
+def vehicle():
+    return render_template('vehicle.html', type=session["object"]["type"])
 
 
 @app.get('/home')

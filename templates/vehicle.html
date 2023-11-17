@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% with type= type %}
+    {% include "navbar.html" %}
+{% endwith %}
+{% block content %}
+<div class="container">
+    <a href="/vehicle/create">
+      <button type="button" class="btn btn-primary">Create</button>
+    </a>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Vehicle ID</th>
+            <th scope="col">Customer ID</th>
+            <th scope="col">Plate Number</th>
+            <th scope="col">Vehicle Type</th>
+          </tr>
+        </thead>
+        <tbody id="vehicleListId">
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('static', filename='vehicleUI.js')}}></script>
+{% endblock %}
