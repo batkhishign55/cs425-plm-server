@@ -34,11 +34,10 @@ window.addEventListener("load", function () {
       const cardTemplate = `
           <tr>
               <th scope="row">${reservation[0]}</th>
-              <td>${reservation[1]}</td>
               <td>${reservation[2]}</td>
               <td>${reservation[3]}</td>
               <td>${reservation[4]}</td>
-            
+              <td>${reservation[5]}</td>
           </tr>
           `;
       return cardTemplate;

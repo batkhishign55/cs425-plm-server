@@ -52,7 +52,7 @@ class UI {
 
   createRow(lot) {
     const cardTemplate = `
-      <li><a class="dropdown-item" href="#" onclick="itemPressed(${lot[0]})">${lot[0]}, ${lot[1]}, ${lot[2]}</a></li>`;
+      <li><a class="dropdown-item" href="#" onclick="itemPressed(${lot[0]})">${lot[0]}, ${lot[1]}, ${lot[2]}, ${lot[5]}</a></li>`;
     return cardTemplate;
   }
 }
@@ -107,7 +107,7 @@ function itemPressed(lotId) {
   console.log(res);
   document.getElementById(
     "searchInput"
-  ).value = `${res[0]}, ${res[1]}, ${res[2]}`;
+  ).value = `${res[0]}, ${res[1]}, ${res[2]}, ${res[5]}`;
 }
 
 document

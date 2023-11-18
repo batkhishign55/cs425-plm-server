@@ -1,11 +1,14 @@
-{% extends 'base.html' %} {% with type=type %} {% include "navbar.html" %} {%
-endwith %} {% block content %}
+{% extends 'base.html' %}
+{% with type=type %}
+    {% include "navbar.html" %}
+{%endwith %} 
+
+{% block content %}
 <div class="container">
   <br />
   <br />
-  <br />
-  <div style="text-align: center">
-    <h3>Make Reservation</h3>
+  <div style="text-align: center;color: #007bff;">
+    <h3>Make a Reservation</h3>
   </div>
 <br>
   <!-- New form for each parking lot -->
@@ -54,7 +57,9 @@ endwith %} {% block content %}
       <br >
       <button type="submit" class="btn btn-primary" style="margin: 0 auto; display:block;">Reserve a spot</button>
     </form>
-  {% endblock %} {% block script %}
+</div>
+
+{% endblock %} {% block script %}
   
 <script src={{ url_for('static', filename='userHomeUI.js')}}></script>
   {% endblock %}
