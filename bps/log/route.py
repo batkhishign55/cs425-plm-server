@@ -29,3 +29,8 @@ def logList():
 @log.get('/api/detail/<log_id>')
 def logDetail(log_id):
     return logController().getSinglelog(log_id)
+
+
+@log.post('/api/create')
+def logCreate():
+    return logController().createLog()

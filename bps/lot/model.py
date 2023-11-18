@@ -65,3 +65,10 @@ class Lot:
                     (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'],))
         self.db.commit()
         return mycursor.rowcount
+
+    def getSpot(self, lotId):
+        mycursor = self.db.cursor()
+        mycursor.execute(
+            """SELECT * from parking_spot
+                where lot_id=%s and status="available" """, (lotId,))
+        return mycursor.fetchall()

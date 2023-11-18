@@ -1,3 +1,4 @@
+from flask import request
 from .model import log
 
 
@@ -15,4 +16,8 @@ class logController:
         data = self.model.getSinglelog(log_id)
         if not data:
             return {'message': 'no data found!'}, 404
+        return {'data': data}
+
+    def createLog(self):
+        data = self.model.createLog(request.json)
         return {'data': data}

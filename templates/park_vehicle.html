@@ -1,102 +1,47 @@
-{% extends 'base.html' %}
-{% with type=type %}
-    {% include "navbar.html" %}
-{% endwith %}
-
-{% block content %}
 <div class="container">
-    <div style="text-align: center;">
-        <h3>Park a Vehicle</h3>
-    </div>
-
-    <form id="parkVehicleForm">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                    <label for="vehicleType">Vehicle Type:</label>
-                    <select id="vehicleType" name="vehicle_type" class="form-control" onchange="checkFields()">
-                        <option value="None" selected disabled hidden>Select Your Vehicle Type</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="truck">Truck</option>
-                        <option value="motorcycle">Motorcycle</option>
-                        <option value="suv">SUV</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                    <br>
-                    <label for="spotType">Spot Type:</label>
-                    <select id="spotType" name="spot_type" class="form-control" onchange="checkFields()">
-                        <option value="None" selected disabled hidden>Select Your Spot Type</option>
-                        <option value="standard">Standard</option>
-                        <option value="valet">Valet</option>
-                        <option value="charging">Charging</option>
-                        <option value="disabled">Disabled</option>
-                        <option value="motorcycle">Motorcycle</option>
-                        <option value="reserved">Reserved</option>
-                        <option value="truck">Truck</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Add this hidden input field for entry time -->
-            <input type="hidden" id="entryTime" name="entry_time">
-
-            <div class="col-md-6 offset-md-3 text-center">
-                <div class="form-group">
-                    <br>
-                    <button type="button" class="btn btn-primary" onclick="confirmPark()" id="parkButton" disabled>Park Vehicle</button>
-                </div>
-            </div>
+  <br />
+  <br />
+  <div style="text-align: center; color: #007bff">
+    <h3>Park a Vehicle</h3>
+  </div>
+  <br />
+  <form id="form2">
+    <div class="row">
+        <div class="col-3">
+          <label for="startTime">Vehicle</label>
+          <select class="form-select" id="vehicleId" required>
+          </select>
         </div>
-    </form>
-
-    <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background */
-        }
-
-        h3 {
-            color: #007bff; /* Blue heading */
-        }
-
-        label {
-            font-weight: bold;
-        }
-    </style>
-
-    <script>
-        function checkFields() {
-            const vehicleType = document.getElementById('vehicleType').value;
-            const spotType = document.getElementById('spotType').value;
-            const parkButton = document.getElementById('parkButton');
-
-            if (vehicleType !== 'None' && spotType !== 'None') {
-                parkButton.disabled = false;
-            } else {
-                parkButton.disabled = true;
-            }
-        }
-
-        function confirmPark() {
-        const vehicleType = document.getElementById('vehicleType').value;
-        const spotType = document.getElementById('spotType').value;
-        const confirmationMessage = `Confirm parking for Vehicle Type: ${vehicleType}, Spot Type: ${spotType}?`;
-        const isConfirmed = confirm(confirmationMessage);
-
-        if (isConfirmed) {
-            // Store the entry time in session storage as a timestamp
-            const entryTime = Date.now(); // Store time as a timestamp
-            sessionStorage.setItem('selectedVehicleType', vehicleType);
-            sessionStorage.setItem('selectedSpotType', spotType);
-            sessionStorage.setItem('entryTime', entryTime);
-
-            // Redirect to the /exit page
-            window.location.href = '/exit';
-        }
-    }
-    </script>
+      <div class="col-4">
+        <label for="startTime">Parking lot</label>
+        <input
+          class="form-control"
+          id="parkingLot"
+          type="text"
+          placeholder="Search by Location, Zipcode, or Lot Name"
+          required
+        />
+        <ul class="dropdown-menu" id="lotListId2"></ul>
+      </div>
+      <div class="col-3">
+        <label for="startTime">Parking spot</label>
+        <select class="form-select" id="spotId" required>
+        </select>
+      </div>
+    </div>
+    <br />
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="margin: 0 auto; display: block"
+    >
+      Park a vehicle
+    </button>
+  </form>
 </div>
-{% endblock %}
+
+{% block script %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src={{ url_for('static', filename='parkVehicleUI.js')}}></script>
+  {% endblock %}

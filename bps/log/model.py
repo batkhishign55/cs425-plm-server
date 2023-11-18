@@ -16,8 +16,9 @@ class log:
                              JOIN parking_lot l on l.lot_id = s.lot_id
                              where l.emp_id=%s""", (getAdminId(),))
         else:
-            mycursor.execute("""SELECT * FROM parking_log_view where cust_id=%s""", (getUserId(),))
-            
+            mycursor.execute(
+                """SELECT * FROM parking_log_view where cust_id=%s""", (getUserId(),))
+
         return mycursor.fetchall()
 
     def getSinglelog(self, log_id):
@@ -25,3 +26,19 @@ class log:
         mycursor.execute(
             """SELECT * FROM parking_log where log_id=%s""", (log_id,))
         return mycursor.fetchone()
+
+    def createLog(self, dict):
+        mycursor = self.db.cursor()
+
+        mycursor.execute("""SELECT MAX(log_id) FROM parking_log""")
+
+        log_id = mycursor.fetchone()[0]
+        log_id += 1
+
+        mycursor.execute(
+            """INSERT INTO parking_log
+                    (log_id, vehicle_id, spot_id, checkin_time)
+                VALUES
+                    (%s, %s, %s, CURRENT_TIMESTAMP())""", (log_id, dict['vehicleId'], dict['spotId'],))
+        self.db.commit()
+        return mycursor.rowcount

@@ -1,4 +1,4 @@
-from flask import abort, request
+from flask import request
 from .model import Lot
 
 
@@ -34,4 +34,10 @@ class LotController:
 
     def createLot(self):
         data = self.model.createLot(request.json)
+        return {'data': data}
+
+    def getSpot(self):
+        data = self.model.getSpot(request.args.get('lotId'))
+        if not data:
+            return {'message': 'no data found!'}, 404
         return {'data': data}

@@ -4,63 +4,14 @@
 {%endwith %} 
 
 {% block content %}
-<div class="container">
-  <br />
-  <br />
-  <div style="text-align: center;color: #007bff;">
-    <h3>Make a Reservation</h3>
-  </div>
+
+{% include "make_res.html" %}
 <br>
-  <!-- New form for each parking lot -->
-    <form id="form">
+<hr style="color: #007bff;">
+<br>
+{% include "park_vehicle.html" %}
 
-  <!-- Search input field with autocomplete -->
-  <div class="row">
-    <div class="col-md-6 mx-auto">
-        <input
-            class="form-control"
-            id="searchInput"
-            type="text"
-            placeholder="Search by Location, Zipcode, or Lot Name"
-            required
-        />
-        <ul class="dropdown-menu" id="lotListId">
-        </ul>
-        </div>
-    </div>
-    <br />
-    <br />
-      <div class="row">
-        <div class="col-md-4">
-          <label for="startTime">Start Time:</label>
-          <input
-            type="datetime-local"
-            id="startTime"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="endTime">End Time:</label>
-          <input
-            type="datetime-local"
-            id="endTime"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="totalDuration">Total Duration:</label>
-          <input type="text" id="totalDuration" class="form-control" readonly />
-        </div>
-      </div>
-      <br >
-      <button type="submit" class="btn btn-primary" style="margin: 0 auto; display:block;">Reserve a spot</button>
-    </form>
-</div>
+{% endblock %}
 
-{% endblock %} {% block script %}
-  
-<script src={{ url_for('static', filename='userHomeUI.js')}}></script>
-  {% endblock %}
-</div>
+{% block script %}
+{% endblock %}

@@ -37,8 +37,8 @@ createRow(log) {
             <th scope="row">${log[0]}</th>
             <td>${log[1]}</td>
             <td>${log[2]}</td>
-            <td>${log[4]}</td>
             <td>${log[3]}</td>
+            <td>${log[4]}</td>
             <td>${log[5]}</td>
             
         </tr>

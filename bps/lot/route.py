@@ -8,6 +8,7 @@ lot = Blueprint(
     url_prefix='/lot'
 )
 
+
 @lot.before_request
 @protect
 def login_required():
@@ -52,3 +53,8 @@ def lotDelete():
 @lot.post('/api/create')
 def lotCreate():
     return LotController().createLot()
+
+
+@lot.get('/api/spot')
+def lotSpot():
+    return LotController().getSpot()

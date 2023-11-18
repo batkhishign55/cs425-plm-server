@@ -81,23 +81,6 @@ def home():
     return render_template('user_home.html', type=session["object"]["type"])
 
 
-@app.get('/park')
-@userProtect
-def park():
-    return render_template('park_vehicle.html', type=session["object"]["type"])
-
-
-@app.get('/exit')
-@userProtect
-def exit():
-    # Retrieve the values from session storage
-    selected_vehicle_type = session.get('selectedVehicleType', 'None')
-    selected_spot_type = session.get('selectedSpotType', 'None')
-
-    # Pass the values to the template
-    return render_template('exit_vehicle.html', type=session["object"]["type"], selected_vehicle_type=selected_vehicle_type, selected_spot_type=selected_spot_type)
-
-
 @app.get('/analytics')
 @adminProtect
 def analytics():
