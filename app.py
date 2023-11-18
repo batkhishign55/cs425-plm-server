@@ -84,7 +84,7 @@ def home():
 @app.get('/analytics')
 @adminProtect
 def analytics():
-    return render_template('analytics.html')
+    return render_template('analytics.html', type=session["object"]["type"])
 
 
 app.secret_key = 'some secret key'

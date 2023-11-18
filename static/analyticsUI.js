@@ -43,8 +43,8 @@ class UI {
 
   calcAnalysis(apiresp) {
     let custs = [];
-    let methods = [[], [], [], []];
-    let methods_sum = [0, 0, 0, 0];
+    let methods = [[], [], [], [], []];
+    let methods_sum = [0, 0, 0, 0, 0];
     for (let pay of apiresp.data) {
       if (pay[0] == null) {
         continue;
@@ -69,9 +69,13 @@ class UI {
           methods[2][methods[2].length - 1] = parseInt(pay[2]);
           methods_sum[2] += parseInt(pay[2]);
           break;
-        case "wallet":
+        case "apple pay":
           methods[3][methods[3].length - 1] = parseInt(pay[2]);
           methods_sum[3] += parseInt(pay[2]);
+          break;
+        case "cash":
+          methods[4][methods[4].length - 1] = parseInt(pay[2]);
+          methods_sum[4] += parseInt(pay[2]);
           break;
         default:
           break;
@@ -100,8 +104,13 @@ class UI {
             backgroundColor: "rgb(75, 192, 192)",
           },
           {
-            label: "Wallet",
+            label: "Apple Pay",
             data: methods[3],
+            backgroundColor: "rgb(75, 150, 89)",
+          },
+          {
+            label: "Cash",
+            data: methods[4],
             backgroundColor: "rgb(255, 205, 86)",
           },
         ],
@@ -130,7 +139,7 @@ class UI {
     new Chart(ctx2, {
       type: "doughnut",
       data: {
-        labels: ["Credit", "Debit", "Google Pay", "Wallet"],
+        labels: ["Credit", "Debit", "Google Pay", "Apple Pay", "Cash"],
         datasets: [
           {
             label: "Dataset",
@@ -139,6 +148,7 @@ class UI {
               "rgb(255, 99, 132)",
               "rgb(54, 162, 235)",
               "rgb(75, 192, 192)",
+              "rgb(75, 150, 89)",
               "rgb(255, 205, 86)",
             ],
           },
