@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from protect import adminProtect
+from protect import adminProtect, protect
 from .controller import LotController
 
 lot = Blueprint(
@@ -9,7 +9,7 @@ lot = Blueprint(
 )
 
 @lot.before_request
-@adminProtect
+@protect
 def login_required():
     pass
 
@@ -27,6 +27,11 @@ def index(lot_id):
 @lot.get('/api/')
 def lotList():
     return LotController().get()
+
+
+@lot.get('/api/all')
+def lotAll():
+    return LotController().getAll()
 
 
 @lot.get('/api/detail/<lot_id>')

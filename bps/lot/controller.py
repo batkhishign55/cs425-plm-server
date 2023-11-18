@@ -12,6 +12,12 @@ class LotController:
             return {'message': 'no data found!'}, 404
         return {'data': data}
 
+    def getAll(self):
+        data = self.model.getAll()
+        if not data:
+            return {'message': 'no data found!'}, 404
+        return {'data': data}
+
     def getSingleLot(self, lot_id):
         data = self.model.getSingleLot(lot_id)
         if not data:

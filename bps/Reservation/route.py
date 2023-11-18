@@ -19,3 +19,8 @@ def login_required():
 @reservation.get('/api/')
 def reservationList():
     return ReservationController().get()
+
+
+@reservation.post('/api/create')
+def resCreate():
+    return ReservationController().createRes()

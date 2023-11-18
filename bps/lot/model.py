@@ -7,6 +7,13 @@ class Lot:
     def __init__(self):
         self.db = get_db()
 
+    def getAll(self):
+        mycursor = self.db.cursor()
+        mycursor.execute(
+            """SELECT pl.*
+                    FROM parking_lot pl""")
+        return mycursor.fetchall()
+
     def get(self):
         mycursor = self.db.cursor()
         mycursor.execute(
