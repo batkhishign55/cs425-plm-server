@@ -52,7 +52,7 @@ class UI {
 
   createRow(lot) {
     const cardTemplate = `
-      <li><a class="dropdown-item" href="#" onclick="itemPressed(${lot[0]})">${lot[0]}, ${lot[1]}, ${lot[2]}, ${lot[5]}</a></li>`;
+      <li><a class="dropdown-item" href="#" onclick="itemPressedd(${lot[0]})">${lot[0]}, ${lot[1]}, ${lot[2]}, ${lot[5]}</a></li>`;
     return cardTemplate;
   }
 }
@@ -98,7 +98,7 @@ function updateTotalDuration() {
   }
 }
 
-function itemPressed(lotId) {
+function itemPressedd(lotId) {
   selected = lotId;
   let dropdown = document.getElementById("lotListId");
   $(dropdown).removeClass("show");

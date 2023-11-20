@@ -74,6 +74,15 @@ def log():
 def vehicle():
     return render_template('vehicle.html', type=session["object"]["type"])
 
+@app.get('/user_profile')
+@userProtect
+def user_profile():
+    return render_template('user_profile.html')
+
+@app.get('/admin_profile')
+@adminProtect
+def admin_profile():
+    return render_template('admin_profile.html')
 
 @app.get('/home')
 @userProtect
