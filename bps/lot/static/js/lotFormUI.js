@@ -38,7 +38,7 @@ document.getElementById("form").addEventListener(
         .then(async (res) => {
           if (res.status === 200) {
             var base_url = window.location.origin;
-            window.location.replace(base_url + "/");
+            window.location.replace(base_url + "/lot");
           } else {
             const jsonresp = await res.json();
             showModal(jsonresp.message);
@@ -65,7 +65,7 @@ document.getElementById("form").addEventListener(
         .then(async (res) => {
           if (res.status === 200) {
             var base_url = window.location.origin;
-            window.location.replace(base_url + "/");
+            window.location.replace(base_url + "/lot");
           } else {
             const jsonresp = await res.json();
             showModal(jsonresp.message);
@@ -91,6 +91,5 @@ class UI {
     getEl("location").setAttribute("value", lot[2]);
     getEl("totalSpots").setAttribute("value", lot[3]);
     getEl("availableSpots").setAttribute("value", lot[4]);
-    getEl("employee").setAttribute("value", lot[5]);
   }
 }

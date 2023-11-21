@@ -34,8 +34,8 @@ class Lot:
         try:
             mycursor.execute(
                 """UPDATE parking_lot
-                        SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s, emp_id=%s
-                    WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'], dict['lotId'],))
+                        SET lot_name=%s, location=%s, total_spots=%s, available_spots=%s
+                    WHERE lot_id=%s""", (dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['lotId'],))
             self.db.commit()
         except Exception as e:
             self.db.rollback()
@@ -62,7 +62,7 @@ class Lot:
             """INSERT INTO parking_lot
                     (lot_id, lot_name, location, total_spots, available_spots, emp_id)
                 VALUES
-                    (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], dict['employee'],))
+                    (%s, %s, %s, %s, %s, %s)""", (lot_id, dict['name'], dict['location'], dict['totalSpots'], dict['availableSpots'], getAdminId(),))
         self.db.commit()
         return mycursor.rowcount
 

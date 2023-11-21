@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 
 from protect import adminProtect, protect
 from .controller import LotController
@@ -17,12 +17,12 @@ def login_required():
 
 @lot.get('/')
 def create():
-    return render_template('lotForm.html')
+    return render_template('lotForm.html', type=session["object"]["type"])
 
 
 @lot.get('/<lot_id>')
 def index(lot_id):
-    return render_template('lotForm.html')
+    return render_template('lotForm.html', type=session["object"]["type"])
 
 
 @lot.get('/api/')
