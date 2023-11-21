@@ -97,7 +97,6 @@ function setParkingSpot() {
         let spotRows = [];
 
         for (const spot of jsonresp.data) {
-          console.log(spot);
           spotRows.push(`<option value="${spot[0]}">${spot[0]}</option>`);
         }
         let dropdown = document.getElementById("spotId");

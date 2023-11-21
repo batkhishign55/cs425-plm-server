@@ -26,6 +26,11 @@ def logList():
     return logController().get()
 
 
+@log.get('/api/parking')
+def logParking():
+    return logController().getParking()
+
+
 @log.get('/api/detail/<log_id>')
 def logDetail(log_id):
     return logController().getSinglelog(log_id)

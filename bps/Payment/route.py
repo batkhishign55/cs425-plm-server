@@ -21,6 +21,11 @@ def paymentList():
     return PaymentController().get()
 
 
+@payment.post('/api/make')
+def makePmt():
+    return PaymentController().make_pmt()
+
+
 @payment.get('/api/analytics/')
 def analytics():
     return PaymentController().analytics()

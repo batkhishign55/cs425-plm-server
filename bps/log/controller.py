@@ -12,6 +12,12 @@ class logController:
             return {'message': 'no data found!'}, 404
         return {'data': data}
 
+    def getParking(self):
+        data = self.model.getParking()
+        if not data:
+            return {'message': 'no data found!'}, 404
+        return {'data': data}
+
     def getSinglelog(self, log_id):
         data = self.model.getSinglelog(log_id)
         if not data:

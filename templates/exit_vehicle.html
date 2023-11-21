@@ -1,120 +1,63 @@
-{% extends 'base.html' %}
-{% with type=type %}
-    {% include "navbar.html" %}
-{% endwith %}
-
-{% block content %}
 <div class="container">
-    <div style="text-align: center;">
-        <h3>Exit Vehicle</h3>
-    </div>
-
-    <form id="exitVehicleForm">
+  <br />
+  <br />
+  <div style="text-align: center; color: #007bff">
+    <h3>Exit a Vehicle</h3>
+  </div>
+  <br />
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Log ID</th>
+          <th scope="col">Vehicle ID</th>
+          <th scope="col">Spot ID</th>
+          <th scope="col">Checkin Time</th>
+          <th scope="col">Res ID</th>
+          </tr>
+      </thead>
+      <tbody id="logListId">
+      </tbody>
+    </table>
+    <div id="formContainer" style="display: none;">
+      <form id="form3" >
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                    <label for="vehicleType">Vehicle Type:</label>
-                    <input type="text" id="vehicleType" name="vehicle_type" class="form-control" value="{{ selected_vehicle_type }}" disabled>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                    <label for="spotType">Spot Type:</label>
-                    <input type="text" id="spotType" name="spot_type" class="form-control" value="{{ selected_spot_type }}" disabled>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                    <label for="entryTime">Entry Time:</label>
-                    <input type="text" id="entryTime" name="entry_time" class="form-control" value="{{ entry_time }}" disabled>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3" id="exitFields" style="display: none;">
-                <div class="form-group">
-                    <label for="exitTime">Exit Time:</label>
-                    <input type="text" id="exitTime" name="exit_time" class="form-control" disabled>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3" id="durationFields" style="display: none;">
-                <div class="form-group">
-                    <label for="duration">Duration:</label>
-                    <input type="text" id="duration" name="duration" class="form-control" disabled>
-                </div>
-            </div>
-
-            <div class="col-md-6 offset-md-3 text-center">
-                <div class="form-group">
-                    <br>
-                    <button type="button" class="btn btn-primary" onclick="confirmExit()">Exit Vehicle</button>
-                </div>
-            </div>
+          <div class="col-3">
+            <label for="logId">Payment for</label>
+            <input type="number" class="form-control" id="logId" disabled required/>
+          </div>
+          <div class="col-3">
+            <label for="duration">Duration</label>
+            <input type="text" class="form-control" id="duration" disabled required/>
+          </div>
+          <div class="col-3">
+            <label for="pmtMode">Payment method</label>
+            <select class="form-select" id="pmtMode" required>
+              <option selected>Select a payment method</option>
+              <option value="cash">cash</option>
+              <option value="credit">credit</option>
+              <option value="debit">debit</option>
+              <option value="google pay">google pay</option>
+              <option value="apple pay">apple pay</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label for="pmtAmt">Payment amount</label>
+            <input type="number" class="form-control" id="pmtAmt" disabled required/>
+          </div>
         </div>
-    </form>
-
-    <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background */
-        }
-
-        h3 {
-            color: #007bff; /* Blue heading */
-        }
-
-        label {
-            font-weight: bold;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Retrieve the selected values from session storage
-            const selectedVehicleType = sessionStorage.getItem('selectedVehicleType') || 'None';
-            const selectedSpotType = sessionStorage.getItem('selectedSpotType') || 'None';
-            const entryTime = parseInt(sessionStorage.getItem('entryTime')) || 0; // Parse as an integer
-
-            // Update the disabled input fields with the selected values
-            document.getElementById('vehicleType').value = selectedVehicleType;
-            document.getElementById('spotType').value = selectedSpotType;
-
-            // Convert entry time to a more readable format
-            const formattedEntryTime = new Date(entryTime).toLocaleString();
-            document.getElementById('entryTime').value = formattedEntryTime;
-        });
-
-        function confirmExit() {
-            // Calculate and set the exit time
-            const exitTime = new Date().toLocaleString();
-            document.getElementById('exitTime').value = exitTime;
-
-            // Calculate and set the duration
-            const entryTime = parseInt(sessionStorage.getItem('entryTime')) || 0;
-            const duration = calculateDuration(entryTime);
-            document.getElementById('duration').value = duration;
-
-            // Show the "Exit Time" and "Duration" fields
-            document.getElementById('exitFields').style.display = 'block';
-            document.getElementById('durationFields').style.display = 'block';
-        }
-
-        function calculateDuration(entryTime) {
-            const exitTime = new Date();
-            const duration = exitTime - entryTime;
-            const formattedDuration = formatDuration(duration);
-            return formattedDuration;
-        }
-
-        function formatDuration(duration) {
-            const milliseconds = parseInt(duration % 1000);
-            const seconds = parseInt((duration / 1000) % 60);
-            const minutes = parseInt((duration / (1000 * 60)) % 60);
-            const hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-
-            return `${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
-        }
-    </script>
-</div>
-{% endblock %}
+        <br />
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="margin: 0 auto; display: block"
+        >
+          Make a payment
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  {% block script %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src={{ url_for('static', filename='exitVehicleUI.js')}}></script>
+    {% endblock %}

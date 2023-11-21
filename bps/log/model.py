@@ -21,6 +21,13 @@ class log:
 
         return mycursor.fetchall()
 
+    def getParking(self):
+        mycursor = self.db.cursor()
+        mycursor.execute(
+            """SELECT * FROM parking_log_view where cust_id=%s and checkout_time is null""", (getUserId(),))
+
+        return mycursor.fetchall()
+
     def getSinglelog(self, log_id):
         mycursor = self.db.cursor()
         mycursor.execute(
@@ -40,5 +47,15 @@ class log:
                     (log_id, vehicle_id, spot_id, checkin_time)
                 VALUES
                     (%s, %s, %s, CURRENT_TIMESTAMP())""", (log_id, dict['vehicleId'], dict['spotId'],))
+        self.db.commit()
+        return mycursor.rowcount
+
+    def updateCheckout(self, logId):
+        mycursor = self.db.cursor()
+
+        mycursor.execute(
+            """UPDATE parking_log
+                    SET checkout_time=CURRENT_TIMESTAMP()
+                WHERE log_id=%s""", (logId,))
         self.db.commit()
         return mycursor.rowcount

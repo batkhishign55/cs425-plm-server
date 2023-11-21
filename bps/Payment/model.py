@@ -17,7 +17,8 @@ class Payment:
                              JOIN parking_lot l on l.lot_id = s.lot_id
                              where l.emp_id=%s""", (getAdminId(),))
         else:
-            mycursor.execute("""SELECT * FROM payment where cust_id=%s""", (getUserId(),))
+            mycursor.execute(
+                """SELECT * FROM payment where cust_id=%s""", (getUserId(),))
         res = mycursor.fetchall()
         return res
 
@@ -29,7 +30,6 @@ class Payment:
                 return payment
         return {}
 
-
     def analytics(self):
         mycursor = self.db.cursor()
 
@@ -39,3 +39,21 @@ class Payment:
                             ORDER BY cust_id, pmt_mode;""")
         res = mycursor.fetchall()
         return res
+
+    def create_pmt(self, dict):
+        mycursor = self.db.cursor()
+
+        try:
+            mycursor.execute("""SELECT MAX(pmt_id) FROM payment""")
+            pmt_id = mycursor.fetchone()[0]
+            pmt_id += 1
+            mycursor.execute(
+                """INSERT INTO payment
+                    (pmt_id, log_id, cust_id, pmt_mode, pmt_amt, pmt_status)
+                VALUES
+                    (%s, %s, %s, %s, %s, %s)""", (pmt_id, dict['logId'], getUserId(), dict['pmtMode'], dict['pmtAmt'], "success",))
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            raise e
+        return mycursor.rowcount
