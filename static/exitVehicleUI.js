@@ -93,14 +93,12 @@ function exit(logId) {
 document.getElementById("form3").addEventListener(
   "submit",
   async function (evt) {
-    evt.preventDefault();
     const elements = document.getElementById("form3").elements;
 
     const obj = {};
     for (const element of elements) {
       obj[element.id] = element.value;
     }
-    console.log(obj);
     await fetch("/pay/api/make", {
       method: "POST",
       headers: {
@@ -110,9 +108,7 @@ document.getElementById("form3").addEventListener(
     })
       .then(async (res) => {
         if (res.status === 200) {
-          const jsonresp = await res.json();
-          jsonrespsave = jsonresp.data;
-          return jsonresp;
+          location.reload();
         } else {
           const jsonresp = await res.json();
           showModal(res.status + " " + jsonresp.message);

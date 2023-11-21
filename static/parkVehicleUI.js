@@ -129,7 +129,7 @@ function itemPressed(lotId) {
 document
   .getElementById("form2")
   .addEventListener("submit", async function (evt) {
-    evt.preventDefault();
+    // evt.preventDefault();
     const elements = document.getElementById("form2").elements;
 
     const obj = {};
@@ -146,8 +146,7 @@ document
     })
       .then(async (res) => {
         if (res.status === 200) {
-          showModal("success");
-          setParkingSpot();
+          location.reload();
         } else {
           const jsonresp = await res.json();
           showModal(jsonresp.message);
