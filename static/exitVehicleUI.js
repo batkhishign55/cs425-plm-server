@@ -3,7 +3,6 @@ window.addEventListener("load", function () {
     .then(async (res) => {
       if (res.status === 200) {
         const jsonresp = await res.json();
-        jsonrespsave = jsonresp.data;
         showValues(jsonresp.data);
       } else if (res.status === 404) {
       } else {

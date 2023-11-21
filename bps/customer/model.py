@@ -48,3 +48,14 @@ class Customer:
                     (%s, %s, %s, %s, %s, %s, %s, %s)""", (cust_id,dict['first_name'],dict['last_name'],dict['email'],dict['phone_number'], dict['address'], dict['username'], dict['password'],))
         self.db.commit()
         return mycursor.rowcount
+    
+    
+    def allUsers(self):
+        mycursor = self.db.cursor()
+        mycursor.execute("""SELECT cust_id as id, first_name, last_name, email, phone_number, 'customer' AS user_type
+                FROM customer
+                UNION
+                SELECT emp_id as id, first_name, last_name, email, phone_number, 'employee' AS user_type
+                FROM employee
+                order by first_name;""")
+        return mycursor.fetchall()

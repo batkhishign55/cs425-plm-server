@@ -29,3 +29,9 @@ class CustController:
     def createCust(self):
         data = self.model.createCust(request.json)
         return {'data': data}
+
+    def allUsers(self):
+        data = self.model.allUsers()
+        if not data:
+            return {'message': "no data found!"}, 404
+        return {'data': data}

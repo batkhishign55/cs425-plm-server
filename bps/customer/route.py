@@ -40,3 +40,8 @@ def custDelete():
 @cust.post('/api/create')
 def custCreate():
     return CustController().createCust()
+
+
+@cust.get('/api/allusers/')
+def analytics():
+    return CustController().allUsers()

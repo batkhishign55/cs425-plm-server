@@ -96,6 +96,12 @@ def analytics():
     return render_template('analytics.html', type=session["object"]["type"])
 
 
+@app.get('/allusers')
+@adminProtect
+def allUsers():
+    return render_template('all_users.html', type=session["object"]["type"])
+
+
 app.secret_key = 'some secret key'
 
 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% with type= type %}
+    {% include "navbar.html" %}
+{% endwith %}
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">User Type</th>
+          </tr>
+        </thead>
+        <tbody id="userListId">
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src={{ url_for('static', filename='allUsersUI.js')}}></script>
+{% endblock %}
