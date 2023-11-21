@@ -131,7 +131,7 @@ document
     })
       .then(async (res) => {
         if (res.status === 200) {
-          showModal("success");
+          location.reload();
         } else {
           const jsonresp = await res.json();
           showModal(jsonresp.message);
