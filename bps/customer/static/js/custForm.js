@@ -24,61 +24,66 @@ document.getElementById("form").addEventListener(
   async function (evt) {
     evt.preventDefault();
 
-    if(mode=="update"){
-    const elements = document.getElementById("form").elements;
+    if (mode == "update") {
+      const elements = document.getElementById("form").elements;
 
-    const urls = location.href.split("/");
-    const custId = urls[urls.length - 1];
-    const obj = { custId };
-    for (const element of elements) {
-      obj[element.id] = element.value;
-    }
-    const resp = await fetch("/cust/api/update", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
-
-    const jsonresp = await resp.json();
-  }//create
-  else{
-    const elements = document.getElementById("form").elements;
-
-      const obj = {};
+      const urls = location.href.split("/");
+      const custId = urls[urls.length - 1];
+      const obj = { custId };
       for (const element of elements) {
         obj[element.id] = element.value;
       }
-      const resp = await fetch("/cust/api/create", {
+      await fetch("/cust/api/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-        
-      });
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/cust");
+          } else {
+            const jsonresp = await res.json();
+            showModal(res.status + " " + jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
+    } //create
+    else {
+      const elements = document.getElementById("form").elements;
 
-      const jsonresp = await resp.json();
+      const obj = {};
+      for (const element of elements) {
+        obj[element.id] = element.value;
+      }
+      await fetch("/cust/api/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/cust");
+          } else {
+            const jsonresp = await res.json();
+            showModal(res.status + " " + jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
     }
-    var base_url = window.location.origin;
-    window.location.replace(base_url+"/");
   },
   true
 );
-  
-  
-  
-// class Api {
-//   async callApiCustDetail() {
-//     const urls=location.href.split('/')
-//     const lotId=urls[urls.length-1]
-//     const resp = await fetch(`/cust/api/detail/${custId}`);
-//     const jsonresp = await resp.json();
-//     return jsonresp;
-//   }
-// }
-  
+
 class UI {
   constructor() {
     this.showCustDetail = this.showCustDetail.bind(this);
@@ -96,8 +101,4 @@ class UI {
     getEl("username").setAttribute("value", customer[6]);
     getEl("password").setAttribute("value", customer[7]);
   }
-
-
-  
 }
-  
