@@ -52,7 +52,6 @@ window.addEventListener("load", function () {
       const cardTemplate = `
           <tr>
               <th scope="row">${vehicle[0]}</th>
-              <td>${vehicle[1]}</td>
               <td>${vehicle[2]}</td>
               <td>${vehicle[3]}</td>
               <td>

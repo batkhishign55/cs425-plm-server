@@ -28,15 +28,25 @@ document.getElementById("form").addEventListener(
       for (const element of elements) {
         obj[element.id] = element.value;
       }
-      const resp = await fetch("/vehicle/api/update", {
+      await fetch("/vehicle/api/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-      });
-
-      const jsonresp = await resp.json();
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/vehicle");
+          } else {
+            const jsonresp = await res.json();
+            showModal(res.status + " " + jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
     } // create
     else {
       const elements = document.getElementById("form").elements;
@@ -45,18 +55,27 @@ document.getElementById("form").addEventListener(
       for (const element of elements) {
         obj[element.id] = element.value;
       }
-      const resp = await fetch("/vehicle/api/create", {
+
+      await fetch("/vehicle/api/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-      });
-
-      const jsonresp = await resp.json();
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            var base_url = window.location.origin;
+            window.location.replace(base_url + "/vehicle");
+          } else {
+            const jsonresp = await res.json();
+            showModal(res.status + " " + jsonresp.message);
+          }
+        })
+        .catch((e) => {
+          showModal(e);
+        });
     }
-    var base_url = window.location.origin;
-    window.location.replace(base_url+"/");
   },
   true
 );
@@ -67,11 +86,9 @@ class UI {
   }
 
   showvehicleDetail(apiresp) {
-    const getEl = (id) => document.getElementById(id);
     const vehicle = apiresp.data;
-    // getEl("vehicle ID").setAttribute("value", vehicle[0]);
-    getEl("custID").setAttribute("value", vehicle[1]);
-    getEl("plateNumber").setAttribute("value", vehicle[2]);
-    getEl("type").setAttribute("value", vehicle[3]);
+    document.getElementById("plateNumber").setAttribute("value", vehicle[2]);
+    var typeEl = document.getElementById("type");
+    typeEl.value = vehicle[3];
   }
 }

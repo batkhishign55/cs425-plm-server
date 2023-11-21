@@ -6,7 +6,7 @@ vehicle = Blueprint(
     url_prefix='/vehicle'
 )
 
-@vehicle.get('/create')
+@vehicle.get('/create/')
 def create():
     return render_template('vehicleForm.html')
 

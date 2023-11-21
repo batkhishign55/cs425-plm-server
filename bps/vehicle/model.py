@@ -2,13 +2,15 @@
 from db import get_db
 from protect import getUserId
 
+
 class Vehicle:
     def __init__(self):
         self.db = get_db()
 
     def get(self):
         mycursor = self.db.cursor()
-        mycursor.execute("""SELECT * FROM vehicle where cust_id=%s""", (getUserId(),))
+        mycursor.execute(
+            """SELECT * FROM vehicle where cust_id=%s""", (getUserId(),))
 
         return mycursor.fetchall()
 
@@ -46,6 +48,6 @@ class Vehicle:
             """INSERT INTO vehicle
                     (vehicle_id, cust_id,plate_number, vehicle_type)
                 VALUES
-                    (%s, %s, %s, %s)""", (vehicle_id, dict['custID'], dict['plateNumber'], dict['type']))
+                    (%s, %s, %s, %s)""", (vehicle_id, getUserId(), dict['plateNumber'], dict['type']))
         self.db.commit()
         return mycursor.rowcount
